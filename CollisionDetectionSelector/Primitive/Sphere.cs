@@ -4,27 +4,10 @@ using System;
 
 namespace CollisionDetectionSelector.Primitive {
     class Sphere {
-        Vector3 point = new Vector3();
-        float radius = 1f;
+        public float Radius = 1f;
 
-        public Point Position {
-            get {
-                return new Point(point.X, point.Y, point.Z);
-            }
-            set {
-                point.X = value.X;
-                point.Y = value.Y;
-                point.Z = value.Z;
-            }
-        }
-        public float Radius {
-            get {
-                return radius;
-            }
-            set {
-                radius = value;
-            }
-        }
+        public Point Position = new Point();
+
         public Sphere() {
             CreateVBO();
         }
@@ -32,21 +15,21 @@ namespace CollisionDetectionSelector.Primitive {
             Position.X = p.X;
             Position.Y = p.Y;
             Position.Z = p.Z;
-            radius = r;
+            Radius = r;
             CreateVBO();
         }
         public Sphere(Point p, float r) {
             Position.X = p.X;
             Position.Y = p.Y;
             Position.Z = p.Z;
-            radius = r;
+            Radius = r;
             CreateVBO();
         }
         public Sphere(float x, float y, float z, float r) {
             Position.X = x;
             Position.Y = y;
             Position.Z = z;
-            radius = r;
+            Radius = r;
             CreateVBO();
         }
 
@@ -110,8 +93,8 @@ namespace CollisionDetectionSelector.Primitive {
         }
         public void Render() {
             GL.PushMatrix();
-            GL.Translate(point.X, point.Y, point.Z);
-            GL.Scale(radius, radius, radius);
+            GL.Translate(Position.X, Position.Y, Position.Z);
+            GL.Scale(Radius, Radius, Radius);
 
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.NormalArray);
@@ -127,7 +110,7 @@ namespace CollisionDetectionSelector.Primitive {
         }
         #endregion
         public override string ToString() {
-            return "Position: (" + point.X + ", " + point.Y + ", " + point.Z + "), Radius: " + radius;
+            return "Position: (" + Position.X + ", " + Position.Y + ", " + Position.Z + "), Radius: " + Radius;
         }
     }
 }
