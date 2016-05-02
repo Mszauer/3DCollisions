@@ -52,37 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Interpolation.cs">
-      <Link>Math\Interpolation.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Matrix2.cs">
-      <Link>Math\Matrix2.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Matrix3.cs">
-      <Link>Math\Matrix3.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Matrix4.cs">
-      <Link>Math\Matrix4.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\MatrixStack.cs">
-      <Link>Math\MatrixStack.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Quaternion.cs">
-      <Link>Math\Quaternion.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Vector2.cs">
-      <Link>Math\Vector2.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Vector3.cs">
-      <Link>Math\Vector3.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Math-Implementation\Math Implementation\Vector4.cs">
-      <Link>Math\Vector4.cs</Link>
-    </Compile>
     <Compile Include="Application.cs" />
+    <Compile Include="Math\Matrix2.cs" />
+    <Compile Include="Math\Matrix3.cs" />
+    <Compile Include="Math\Matrix4.cs" />
+    <Compile Include="Math\MatrixStack.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Primitive\Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
+    <Compile Include="Samples\PointSample.cs" />
     <Compile Include="Samples\WindowSample.cs" />
   </ItemGroup>
   <ItemGroup>
