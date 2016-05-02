@@ -9,8 +9,8 @@ namespace CollisionDetectionSelector.Primitive {
                 return position;
             }
             set {
-                if (position == null) {
-                    position = new Vector3();
+                if (Position == null) {
+                    Position = new Vector3();
                 }
                 position.X = value.X;
                 position.Y = value.Y;
