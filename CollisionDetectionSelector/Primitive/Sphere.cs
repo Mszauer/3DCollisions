@@ -7,7 +7,11 @@ namespace CollisionDetectionSelector.Primitive {
         public float Radius = 1f;
 
         public Point Position = new Point();
-
+        public Vector3 vPosition {
+            get {
+                return Position.Position;
+            }
+        }
         public Sphere() {
             CreateVBO();
         }

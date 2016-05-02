@@ -50,6 +50,9 @@ namespace CollisionDetectionSelector.Primitive {
         public void FromVector(Vector3 v) {
             Position = new Vector3(v.X, v.Y, v.Z);
         }
+        public Vector3 ToVector() {
+            return new Vector3(Position.X, Position.Y, Position.Z);
+        }
         #region Rendering
         public void Render() {
             GL.Begin(PrimitiveType.Points);
