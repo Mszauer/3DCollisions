@@ -47,6 +47,9 @@ namespace CollisionDetectionSelector.Primitive {
         public Point(Vector3 v) {
             Position = new Vector3(v.X, v.Y, v.Z);
         }
+        public Point(Point v) {
+            Position = new Vector3(v.X, v.Y, v.Z);
+        }
         public void FromVector(Vector3 v) {
             Position = new Vector3(v.X, v.Y, v.Z);
         }
