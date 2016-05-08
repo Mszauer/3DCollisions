@@ -14,7 +14,7 @@ namespace CollisionDetectionSelector.Primitive {
         }
         public Vector3 Extents {
             get {
-                return new Vector3((Max.X - Center.X) / 2, (Max.Y - Center.Y) / 2, (Max.Z - Center.Z) / 2);
+                return new Vector3((Max.X - Center.X), (Max.Y - Center.Y), (Max.Z - Center.Z));
             }
         }
         public bool IsValid {
@@ -55,7 +55,17 @@ namespace CollisionDetectionSelector.Primitive {
             }
         }
         public AABB(Point center,Vector3 extents) {
-            
+            //min == center - extents
+            Min.X = center.X - extents.X;
+            Min.Y = center.Y - extents.Y;
+            Min.Z = center.Z - extents.Z;
+
+            Max.X = center.X + extents.X;
+            Max.Y = center.Y + extents.Y;
+            Max.Z = center.Z + extents.Z;
+            if (!IsValid) {
+                Fix();
+            }
         }
         public void Render() {
             GL.Begin(PrimitiveType.Quads);
