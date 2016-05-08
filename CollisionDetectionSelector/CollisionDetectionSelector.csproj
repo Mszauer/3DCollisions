@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Collisions\AABBCollisions.cs" />
     <Compile Include="Collisions\SphereCollisions.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix3.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Samples\AABBPointSample.cs" />
     <Compile Include="Samples\AABBSample.cs" />
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />

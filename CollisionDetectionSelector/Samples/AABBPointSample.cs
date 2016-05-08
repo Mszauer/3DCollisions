@@ -31,7 +31,7 @@ namespace CollisionDetectionSelector.Samples {
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
             GL.PointSize(2f);
 
-            Point closest = Collisions.ClosestPoint(testAABBs[0], secondFarPoint);
+            Point closest = Collisions.AABBCollisions.ClosestPoint(testAABBs[0], secondFarPoint);
             if (closest.ToVector() != new Vector3(2f, 3.4f, 1f)) {
                 System.Console.ForegroundColor = System.ConsoleColor.Red;
             }
@@ -58,7 +58,7 @@ namespace CollisionDetectionSelector.Samples {
             foreach (Point point in testPoints) {
                 bool collides = false;
                 foreach (AABB aabb in testAABBs) {
-                    if (Collisions.PointInAABB(aabb, point)) {
+                    if (Collisions.AABBCollisions.PointInAABB(aabb, point)) {
                         collides = true;
                         break;
                     }
@@ -75,7 +75,7 @@ namespace CollisionDetectionSelector.Samples {
 
             Point closest;
             foreach (AABB aabb in testAABBs) {
-                closest = Collisions.ClosestPoint(aabb, farPoint);
+                closest = Collisions.AABBCollisions.ClosestPoint(aabb, farPoint);
 
                 GL.Color3(0f, 1f, 1f);
                 GL.Begin(PrimitiveType.Lines);
@@ -91,7 +91,7 @@ namespace CollisionDetectionSelector.Samples {
             farPoint.Render();
             secondFarPoint.Render();
 
-            closest = Collisions.ClosestPoint(testAABBs[0], secondFarPoint);
+            closest = Collisions.AABBCollisions.ClosestPoint(testAABBs[0], secondFarPoint);
             GL.Color3(0f, 1f, 1f);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(closest.X, closest.Y, closest.Z);

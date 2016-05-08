@@ -68,47 +68,7 @@ namespace CollisionDetectionSelector.Primitive {
             }
         }
 
-        public bool PointInAABB(AABB aabb,Point point) {
-            //if this is static then how can i use min/max?
-            //using this.min/max did  NOT work
-            bool passed = true;
-            if (!(Min.X < aabb.Min.X) && !(aabb.Min.X < Max.X)) {
-                passed = false;
-            }
-            if (!(Min.Y < aabb.Min.Y) && !(aabb.Min.Y < Max.Y)) {
-                passed = false;
-            }
-            if (!(Min.Z < aabb.Min.Z) && !(aabb.Min.Z < Max.Z)) {
-                passed = false;
-            }
-            return passed;
-        }
-
-        public Point ClosestPoint(AABB aabb, Point point) {
-            Point result = new Point(point);
-            if (point.X > aabb.Max.X) {
-                //outside box towards max
-                result.X = aabb.Max.X;
-            }
-            else if (point.X < aabb.Min.X) {
-                //outside box toawrds min
-                result.X = aabb.Min.X;
-            }
-            if (point.Y > aabb.Max.Y) {
-                result.Y = aabb.Max.Y;
-            }
-            else if (point.Y < aabb.Min.Y) {
-                result.Y = aabb.Min.Y;
-            }
-            if (point.Z > aabb.Max.Z) {
-                result.Z = aabb.Max.Z;
-            }
-            else if(point.Z < aabb.Min.Z) {
-                result.Z = aabb.Min.Z;
-            }
-            return result;
-        }
-
+        
         public void Render() {
             GL.Begin(PrimitiveType.Quads);
 
