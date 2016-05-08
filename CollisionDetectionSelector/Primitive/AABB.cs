@@ -9,15 +9,12 @@ namespace CollisionDetectionSelector.Primitive {
 
         public Point Center {
             get {
-                return new Point((Max.X - Min.X) / 2, (Max.Y - Min.Y) / 2, (Max.Z - Min.Z) / 2);
+                return new Point(Min.X+(Max.X - Min.X) / 2, Min.Y+(Max.Y - Min.Y) / 2, Min.Z+(Max.Z - Min.Z) / 2);
             }
         }
         public Vector3 Extents {
             get {
-                //maybe use center?
-                //max-center || center-min = extent?
-                return new Vector3((Max.X - Min.X) / 2, (Max.Y - Min.Y) / 2, (Max.Z - Min.Z) / 2);
-
+                return new Vector3((Max.X - Center.X) / 2, (Max.Y - Center.Y) / 2, (Max.Z - Center.Z) / 2);
             }
         }
         public bool IsValid {
@@ -36,18 +33,20 @@ namespace CollisionDetectionSelector.Primitive {
         public AABB() {
             //make unit AABB
             //min=-1, max=+1 on all axiis
+            Min = new Point(-1, -1, -1);
+            Max = new Point(1, 1, 1);
         }
         public AABB(Point min, Point max) {
             //set min/max
             Min = min;
             Max = max;
             //can be invalid and might need fix
-            if (IsValid) {
-
+            if (!IsValid) {
+                Fix();
             }
         }
         public AABB(Point center,Vector3 extents) {
-
+            
         }
         public void Render() {
             GL.Begin(PrimitiveType.Quads);
