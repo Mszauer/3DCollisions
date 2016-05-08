@@ -69,6 +69,8 @@ namespace CollisionDetectionSelector.Primitive {
         }
 
         public bool PointInAABB(AABB aabb,Point point) {
+            //if this is static then how can i use min/max?
+            //using this.min/max did  NOT work
             bool passed = true;
             if (!(Min.X < aabb.Min.X) && !(aabb.Min.X < Max.X)) {
                 passed = false;
