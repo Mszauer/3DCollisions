@@ -24,11 +24,20 @@ namespace CollisionDetectionSelector.Primitive {
         }
         public void Fix() {
             //store old Min
-            Point _min = new Point(Min);
+            Point _max = new Point(Max);
             //change new "Min" to previous max
-            Min = Max;
-            //set new max to previous Min?
-            Max = _min;
+           if (Min.X > Max.X) {
+                Max.X = Min.X;
+                Min.X = _max.X;
+            }
+           if (Min.Y > Max.Y) {
+                Max.Y = Min.Y;
+                Min.Y = _max.Y;
+            }
+           if (Min.Z > Max.Z) {
+                Max.Z = Min.Z;
+                Min.Z = _max.Z;
+            }
         }
         public AABB() {
             //make unit AABB
