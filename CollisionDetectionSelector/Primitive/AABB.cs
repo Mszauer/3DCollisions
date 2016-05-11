@@ -9,7 +9,7 @@ namespace CollisionDetectionSelector.Primitive {
 
         public Point Center {
             get {
-                return new Point(Min.X+(Max.X - Min.X) / 2, Min.Y+(Max.Y - Min.Y) / 2, Min.Z+(Max.Z - Min.Z) / 2);
+                return new Point(Min.X+(Max.X - Min.X) / 2f, Min.Y+(Max.Y - Min.Y) / 2f, Min.Z+(Max.Z - Min.Z) / 2f);
             }
         }
         public Vector3 Extents {
