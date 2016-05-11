@@ -13,9 +13,10 @@ namespace CollisionDetectionSelector.Collisions {
         }
         public Point ClosestPoint(Point a,Plane p) {
             // p.A*x1+p.B*y1+p.Z*1+d / lengthsquared(a)
+            //distance = |PQ dot N| / ||N|| where n = distance of plane p, p = known point on plane p, q = random point
             float distance = ((p.Normal.X * a.X) + (p.Normal.Y * a.Y) + (p.Normal.Z * a.Z))/*squared because bottom is too?*/ / Vector3.LengthSquared(p.Normal);
 
-            //return point?
+            //return point? or float distance
             return result;
         }
     }
