@@ -4,20 +4,18 @@ using CollisionDetectionSelector.Primitive;
 
 namespace CollisionDetectionSelector.Collisions {
     class PlaneCollision {
-        public bool PointOnPlane(Point a, Point inside,Plane p) {
-            //iff Vector3.Dot(a-inside,P) = 0
-            if (Vector3.Dot((new Vector3(a.X,a.Y,a.Z)-new Vector3(inside.X, inside.Y, inside.Z)),p.Normal) == 0){
-                return true;
-            }
-            return false;
+        public static bool PointOnPlane(Point unknown,Plane p) {
+            //iff Vector3.Dot(unknow,normal(of plane)) - Distance == 0
+            //iff ax+by+cz-d=result
+            //0 == on plane, + = above plane, - = below plane
+            float result = Vector3.Dot((new Vector3(unknown.X, unknown.Y, unknown.Z)), p.Normal) - p.Distance;
+            return Math.Abs(0f - result) < 0.00001f; //essentially 0
         }
-        public Point ClosestPoint(Point a,Plane p) {
-            // p.A*x1+p.B*y1+p.Z*1+d / lengthsquared(a)
-            //distance = |PQ dot N| / ||N|| where n = distance of plane p, p = known point on plane p, q = random point
-            float distance = ((p.Normal.X * a.X) + (p.Normal.Y * a.Y) + (p.Normal.Z * a.Z))/*squared because bottom is too?*/ / Vector3.LengthSquared(p.Normal);
-
-            //return point? or float distance
-            return result;
+        public static float DistanceFromPlane(Point point, Plane plane) {
+            float dist = 0f;
+            //Vector3.Dot(point, normal(of plane)) = distance
+            dist = Vector3.Dot(new Vector3(point.X, point.Y, point.Z), plane.Normal);
+            return dist;
         }
     }
 }

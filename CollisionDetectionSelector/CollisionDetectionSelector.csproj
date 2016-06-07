@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Collisions\AABBCollisions.cs" />
+    <Compile Include="Collisions\PlaneCollision.cs" />
     <Compile Include="Collisions\SphereCollisions.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix3.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
+    <Compile Include="Samples\PointOnPlaneSample.cs" />
     <Compile Include="Samples\PointSample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
     <Compile Include="Samples\WindowSample.cs" />
