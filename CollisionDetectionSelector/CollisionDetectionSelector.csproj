@@ -79,6 +79,7 @@
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\LineSample.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
+    <Compile Include="Samples\PointOnLineSample.cs" />
     <Compile Include="Samples\PointOnPlaneSample.cs" />
     <Compile Include="Samples\PointSample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
