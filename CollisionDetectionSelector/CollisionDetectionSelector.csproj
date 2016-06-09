@@ -66,6 +66,7 @@
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Primitive\AABB.cs" />
+    <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\Plane.cs" />
     <Compile Include="Primitive\Point.cs" />
     <Compile Include="Primitive\Sphere.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Samples\ClosesPointOnPlane.cs" />
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
+    <Compile Include="Samples\LineSample.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
     <Compile Include="Samples\PointOnPlaneSample.cs" />
     <Compile Include="Samples\PointSample.cs" />

@@ -4,5 +4,6 @@ using CollisionDetectionSelector.Primitive;
 
 namespace CollisionDetectionSelector.Collisions {
     class LineCollisions {
+        
     }
 }
