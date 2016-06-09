@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Samples\AABBPointSample.cs" />
     <Compile Include="Samples\AABBSample.cs" />
+    <Compile Include="Samples\ClosesPointOnPlane.cs" />
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
