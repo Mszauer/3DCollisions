@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="Collisions\AABBCollisions.cs" />
+    <Compile Include="Collisions\LineCollisions.cs" />
     <Compile Include="Collisions\PlaneCollision.cs" />
     <Compile Include="Collisions\SphereCollisions.cs" />
     <Compile Include="Math\Matrix2.cs" />

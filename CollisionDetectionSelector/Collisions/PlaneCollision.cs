@@ -28,5 +28,28 @@ namespace CollisionDetectionSelector.Collisions {
             return unknown;
 
         }
+        public static Point IntersectPlanes(Plane p1, Plane p2, Plane p3) {
+            Vector3 m1 = new Vector3(p1.Normal.X, p2.Normal.X, p3.Normal.X);
+            Vector3 m2 = new Vector3(p1.Normal.Y, p2.Normal.Y, p3.Normal.Z);
+            Vector3 m3 = new Vector3(p1.Normal.Z, p2.Normal.Z, p3.Normal.Z);
+            Vector3 d = new Vector3(p1.Distance, p2.Distance, p3.Distance);
+
+            Vector3 u = Vector3.Cross(m2, m3);
+            Vector3 v = Vector3.Cross(m1, d);
+
+
+            float denom = Vector3.Dot(m1, u);
+
+            if (Math.Abs(denom) < 0.00001f) {
+                throw new SystemException();
+                return new Point(0, 0, 0);
+            }
+
+            return new Point(
+                Vector3.Dot(d, u) / denom,
+                Vector3.Dot(m3, v) / denom,
+                -Vector3.Dot(m2, v) / denom
+            );
+        }
     }
 }
