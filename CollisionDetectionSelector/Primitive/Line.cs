@@ -17,8 +17,8 @@ namespace CollisionDetectionSelector.Primitive {
             }
         }
         public Line(Line copy) {
-            Start = copy.Start;
-            End = copy.End;
+            Start = new Point(copy.Start.X,copy.Start.Y,copy.Start.Z);
+            End = new Point(copy.End.X,copy.End.Y,copy.End.Z);
         }
         public Line(Point p1, Point p2) {
             Start = new Point(p1);

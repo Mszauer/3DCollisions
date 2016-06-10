@@ -34,17 +34,17 @@ namespace CollisionDetectionSelector.Collisions {
             //project c onto b, then find the
             //parametrized position d(t) = a+t*(b-a)
             //t = Dot(c - a, ab) / Dot(ab, ab);
-            t = Vector3.Dot(c.ToVector() - a, ab.ToVector())/Vector3.Dot(ab.ToVector(),ab.ToVector());
+            t = Vector3.Dot((c.ToVector() - a), ab.ToVector()) / Vector3.Dot(ab.ToVector(),ab.ToVector());
            
             //clamp t to 0-1 range
             //if t is outside range, it is outside line
-            t = Clamp(t, 0f, 1f);
+            t = Clamp(t, 1f, 0f);
 
             //compute project position from clamped t
-            Point d = new Point(a + (ab.ToVector()*t));
+            Point distance = new Point(a + (ab.ToVector()*t));
 
             //return result
-            return d;
+            return distance;
         }
         public static Point ClosestPoint(Line ab,Point c) {
             float t = 0f;

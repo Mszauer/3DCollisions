@@ -56,6 +56,7 @@
     <Compile Include="Collisions\AABBCollisions.cs" />
     <Compile Include="Collisions\LineCollisions.cs" />
     <Compile Include="Collisions\PlaneCollision.cs" />
+    <Compile Include="Collisions\RayCollisions.cs" />
     <Compile Include="Collisions\SphereCollisions.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix3.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\Plane.cs" />
     <Compile Include="Primitive\Point.cs" />
+    <Compile Include="Primitive\Ray.cs" />
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,13 +78,16 @@
     <Compile Include="Samples\AABBSample.cs" />
     <Compile Include="Samples\ClosesPointOnPlane.cs" />
     <Compile Include="Samples\ClosestPointOnLineSample.cs" />
+    <Compile Include="Samples\ClosestPointOnRay.cs" />
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\LineSample.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
     <Compile Include="Samples\PointOnLineSample.cs" />
     <Compile Include="Samples\PointOnPlaneSample.cs" />
+    <Compile Include="Samples\PointOnRay.cs" />
     <Compile Include="Samples\PointSample.cs" />
+    <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
     <Compile Include="Samples\WindowSample.cs" />
   </ItemGroup>
