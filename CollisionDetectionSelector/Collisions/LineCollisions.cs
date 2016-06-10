@@ -4,12 +4,12 @@ using CollisionDetectionSelector.Primitive;
 
 namespace CollisionDetectionSelector.Collisions {
     class LineCollisions {
-        public static T Clamp<T> (T value, T max, T min) {
-            T result = value;
-            if ((float)System.Convert.ToInt32(result) > (float)System.Convert.ToInt32(max)) {
+        public static float Clamp (float value, float max, float min) {
+            float result = value;
+            if (result > max) {
                 result = max;
             }
-            else if ((float)System.Convert.ToInt32(result) < (float)System.Convert.ToInt32(min)) {
+            else if (result < min) {
                 result = min;
             }
             return result;
@@ -38,7 +38,7 @@ namespace CollisionDetectionSelector.Collisions {
            
             //clamp t to 0-1 range
             //if t is outside range, it is outside line
-            t = Clamp<float>(t, 0f, 1f);
+            t = Clamp(t, 0f, 1f);
 
             //compute project position from clamped t
             Point d = new Point(a + (ab.ToVector()*t));
