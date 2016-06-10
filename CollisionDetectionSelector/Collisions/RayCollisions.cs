@@ -6,7 +6,7 @@ namespace CollisionDetectionSelector.Collisions {
     class RayCollisions {
         public static float Max(float value, float max) {
             float result = value;
-            if (result > max) {
+            if (result < max) {
                 result = max;
             }
             return result;
