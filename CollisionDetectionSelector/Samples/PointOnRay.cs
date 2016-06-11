@@ -26,6 +26,11 @@ namespace CollisionDetectionSelector.Samples {
             GL.Enable(EnableCap.DepthTest);
             GL.PointSize(4f);
 
+            Point p1 = new Point(0, 0, 0);
+            Point p2 = new Point(0, 0, 0);
+            LogError("Points equal: " + (p1.X == p2.X && p1.Y == p2.Y && p1.Z == p2.Z));
+            LogError("Points equal: " + (p1 == p2));   
+             
             for (int i = 0; i < 3; ++i) {
                 if (!Collisions.RayCollisions.PointOnRay(testPoints[i], testRay)) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;

@@ -15,9 +15,11 @@ namespace CollisionDetectionSelector.Collisions {
             //point and ray same then return true
             Vector3 newNorm = new Vector3(p.X - r.Position.X, p.Y - r.Position.Y, p.Z - r.Position.Z);
             newNorm.Normalize();
-
+            if (p.X == r.Position.X && p.Y == r.Position.Y && p.Z == r.Position.Z) {
+                return true;
+            }
             float d = Vector3.Dot(newNorm, r.Normal);
-
+            
             return Math.Abs(1f - d) < 0.000001f;//use really small epsilon
         }
         public static Point ClosestPoint(Ray r, Point c) {
