@@ -90,6 +90,8 @@
     <Compile Include="Samples\PointSample.cs" />
     <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
+    <Compile Include="Samples\SphereAABBIntersection.cs" />
+    <Compile Include="Samples\SpherePlaneIntersection.cs" />
     <Compile Include="Samples\SphereSphereIntersection.cs" />
     <Compile Include="Samples\WindowSample.cs" />
   </ItemGroup>

@@ -26,7 +26,7 @@ namespace CollisionDetectionSelector.Samples {
 
             for (int i = 0; i < spheres.Length; ++i) {
                 for (int j = 0; j < spheres.Length; ++j) {
-                    if (Intersections.SphereSphereIntersect(spheres[i], spheres[j]) != results[t++]) {
+                    if (Intersects.SphereSphereIntersect(spheres[i], spheres[j]) != results[t++]) {
                         LogError("sphere " + i + " and " + j + " should " +
                             (results[t - 1] ? "" : "not ") + "intersect"
                         );
@@ -42,7 +42,7 @@ namespace CollisionDetectionSelector.Samples {
             for (int i = 0; i < spheres.Length; ++i) {
                 GL.Color3(0f, 0f, 1f);
                 for (int j = 0; j < spheres.Length; ++j) {
-                    if (i != j && Intersections.SphereSphereIntersect(spheres[i], spheres[j])) {
+                    if (i != j && Intersects.SphereSphereIntersect(spheres[i], spheres[j])) {
                         GL.Color3(1f, 0f, 0f);
                         break;
                     }
