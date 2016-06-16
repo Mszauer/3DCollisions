@@ -47,22 +47,21 @@ using OpenTK.Graphics.OpenGL;
             _baseCameraAngle.X += 45.0f * dTime;
         }
         public virtual void Render() {
+        // Again, Vector3 and Matrix4 must be fully scoped, because
+        // the OpenTK namespace contains both classes already
+        Math_Implementation.Vector3 eyePos = new Math_Implementation.Vector3();
+        eyePos.X = _baseCameraAngle.Z * -(float)System.Math.Sin(_baseCameraAngle.X * _baseRads * (float)System.Math.Cos(_baseCameraAngle.Y * _baseRads));
+        eyePos.Y = _baseCameraAngle.Z * -(float)System.Math.Sin(_baseCameraAngle.Y * _baseRads);
+        eyePos.Z = -_baseCameraAngle.Z * (float)System.Math.Cos(_baseCameraAngle.X * _baseRads * (float)System.Math.Cos(_baseCameraAngle.Y * _baseRads));
 
-        }
+        Math_Implementation.Matrix4 lookAt =
+            Math_Implementation.Matrix4.LookAt(eyePos,
+            new Math_Implementation.Vector3(0.0f, 0.0f, 0.0f),
+            new Math_Implementation.Vector3(0.0f, 1.0f, 0.0f));
+        GL.LoadMatrix(Math_Implementation.Matrix4.Transpose(lookAt).Matrix);
+    }
         public virtual void Shutdown() {
-            // Again, Vector3 and Matrix4 must be fully scoped, because
-            // the OpenTK namespace contains both classes already
-            Math_Implementation.Vector3 eyePos = new Math_Implementation.Vector3();
-            eyePos.X = _baseCameraAngle.Z * -(float)System.Math.Sin(_baseCameraAngle.X * _baseRads * (float)System.Math.Cos(_baseCameraAngle.Y * _baseRads));
-            eyePos.Y = _baseCameraAngle.Z * -(float)System.Math.Sin(_baseCameraAngle.Y * _baseRads);
-            eyePos.Z = -_baseCameraAngle.Z * (float)System.Math.Cos(_baseCameraAngle.X * _baseRads * (float)System.Math.Cos(_baseCameraAngle.Y * _baseRads));
 
-            Math_Implementation.Matrix4 lookAt =
-                Math_Implementation.Matrix4.LookAt(eyePos,
-                new Math_Implementation.Vector3(0.0f, 0.0f, 0.0f),
-                new Math_Implementation.Vector3(0.0f, 1.0f, 0.0f));
-
-            GL.LoadMatrix(Math_Implementation.Matrix4.Transpose(lookAt).Matrix);
         }
     // Has a default implementation, making the need to override in child
     // classes purley optional

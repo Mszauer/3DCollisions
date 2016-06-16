@@ -22,11 +22,8 @@ namespace CollisionDetectionSelector.Collisions {
                 distance = distance / (Vector3.Dot(p.Normal, p.Normal));
             }
             Point result = new Point(p.Normal * distance);
-            unknown.X -= result.X;
-            unknown.Y -= result.Y;
-            unknown.Z -= result.Z;
-            return unknown;
 
+            return new Point(unknown.X-result.X,unknown.Y-result.Y,unknown.Z-result.Z);
         }
         public static Point IntersectPlanes(Plane p1, Plane p2, Plane p3) {
             Vector3 m1 = new Vector3(p1.Normal.X, p2.Normal.X, p3.Normal.X);

@@ -31,8 +31,13 @@ class Intersects {
         return SphereAABBIntersect(sphere, aabb);
     }
     public static bool SpherePlaneIntersect(Sphere sphere, Plane plane) {
-        Vector3 closestPoint = CollisionDetectionSelector.Collisions.PlaneCollision.ClosestPoint(plane, sphere.Position).ToVector();
-        Vector3 distance = sphere.Position.ToVector() - closestPoint;
+        Point closest = CollisionDetectionSelector.Collisions.PlaneCollision.ClosestPoint(plane, sphere.Position);
+
+        Vector3 closestPoint = closest.ToVector();
+
+        Vector3 spherePos = sphere.Position.ToVector();
+
+        Vector3 distance = spherePos - closestPoint;
 
         float distSq = Vector3.LengthSquared(distance);
         float radiusSq = sphere.Radius * sphere.Radius;
