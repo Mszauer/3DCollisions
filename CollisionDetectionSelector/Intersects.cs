@@ -47,4 +47,33 @@ class Intersects {
     public static bool SpherePlaneIntersect(Plane plane, Sphere sphere) {
         return SpherePlaneIntersect(sphere, plane);
     }
+    public static bool AABBAABBIntersect(AABB a,AABB b) {
+        return
+            (a.Min.X <= b.Max.X && a.Max.X >= b.Min.X) &&
+            (a.Min.Y <= b.Max.Y && a.Max.Y >= b.Min.Y) &&
+            (a.Min.Z <= b.Max.Z && a.Max.Z >= b.Min.Z);
+    }
+    public static bool AABBPlaneIntersect(AABB aabb,Plane plane) {
+        //find center point of AABB
+        Point center = new Point(aabb.Max.X + aabb.Min.X * 0.5f,
+                                 aabb.Max.Y + aabb.Min.Y * 0.5f,
+                                 aabb.Max.Z + aabb.Min.Z * 0.5f);
+
+        //find positive extents
+        Point extents = new Point(aabb.Max.X - center.X,
+                                  aabb.Max.Y - center.Y,
+                                  aabb.Max.Z - center.Z);
+
+        //project interval radius of b onto L(t) = b.c + t * p.n
+        float radius = extents.X * System.Math.Abs(plane.Normal.X) + extents.Y * System.Math.Abs(plane.Normal.Y) + extents.Z * System.Math.Abs(plane.Normal.Z);
+
+        //compute distance of box center from plane
+        float s = Vector3.Dot(plane.Normal, center.ToVector()) - plane.Distance;
+
+        //intersection occurs when distance s falls within +-radius of plane
+        return System.Math.Abs(s) <= radius;
+    }
+    public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
+        return AABBPlaneIntersect(aabb, p);
+    }
 }
