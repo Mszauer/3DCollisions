@@ -71,7 +71,8 @@ class Intersects {
         float s = Vector3.Dot(plane.Normal, center.ToVector()) - plane.Distance;
 
         //intersection occurs when distance s falls within +-radius of plane
-        return System.Math.Abs(s) <= radius;
+        //espsilon???!
+        return (System.Math.Abs(s) <= radius);
     }
     public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
         return AABBPlaneIntersect(aabb, p);
