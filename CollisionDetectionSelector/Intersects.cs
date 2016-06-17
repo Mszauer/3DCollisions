@@ -73,6 +73,8 @@ class Intersects {
         //intersection occurs when distance s falls within +-radius of plane
         //espsilon???!
         return (System.Math.Abs(s) <= radius);
+        //last box should return true, but it returns false.
+        //difference is .0000xx
     }
     public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
         return AABBPlaneIntersect(aabb, p);
