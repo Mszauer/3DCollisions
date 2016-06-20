@@ -55,26 +55,25 @@ class Intersects {
     }
     public static bool AABBPlaneIntersect(AABB aabb,Plane plane) {
         //find center point of AABB
-        Point center = new Point(aabb.Max.X + aabb.Min.X * 0.5f,
-                                 aabb.Max.Y + aabb.Min.Y * 0.5f,
-                                 aabb.Max.Z + aabb.Min.Z * 0.5f);
-
+        Point center = new Point((aabb.Max.X + aabb.Min.X) * 0.5f,
+                                 (aabb.Max.Y + aabb.Min.Y) * 0.5f,
+                                 (aabb.Max.Z + aabb.Min.Z) * 0.5f);
         //find positive extents
         Point extents = new Point(aabb.Max.X - center.X,
                                   aabb.Max.Y - center.Y,
                                   aabb.Max.Z - center.Z);
 
         //project interval radius of b onto L(t) = b.c + t * p.n
-        float radius = extents.X * System.Math.Abs(plane.Normal.X) + extents.Y * System.Math.Abs(plane.Normal.Y) + extents.Z * System.Math.Abs(plane.Normal.Z);
+        //r = collapsed aabb into a single line,
+        //center point is still s but length of aabb is along normal of plane
+        //So, you now have a line, with Position as it's center point, extending r units in each direction along the Plane's Normal
+        float r = extents.X * System.Math.Abs(plane.Normal.X) + extents.Y * System.Math.Abs(plane.Normal.Y) + extents.Z * System.Math.Abs(plane.Normal.Z);
 
         //compute distance of box center from plane
         float s = Vector3.Dot(plane.Normal, center.ToVector()) - plane.Distance;
 
-        //intersection occurs when distance s falls within +-radius of plane
-        //espsilon???!
-        return (System.Math.Abs(s) <= radius);
-        //last box should return true, but it returns false.
-        //difference is .0000xx
+        //"return distanceOfProjectedAABBFromPlane < projectedAABBSize"
+        return (System.Math.Abs(s) <= r);
     }
     public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
         return AABBPlaneIntersect(aabb, p);
