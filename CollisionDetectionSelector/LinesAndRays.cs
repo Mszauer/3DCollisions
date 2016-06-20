@@ -4,9 +4,6 @@ using CollisionDetectionSelector.Primitive;
 
 class LinesAndRays {
     public static bool Raycast(Ray ray, Sphere sphere, out float t) {
-
-    }
-    public static float RayCast(Ray ray, Sphere sphere) {
         //look at image to understand how to get each point
         //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_image_4.png
         Vector3 p0 = new Vector3(ray.Position.X, ray.Position.Y, ray.Position.Z);
@@ -26,11 +23,18 @@ class LinesAndRays {
             return -1;//-1 is invalid
         }
         //ray is inside
-        else if (eSq < (r* r)) {
+        else if (eSq < (r * r)) {
             return a + f;//reverse direction
         }
         //else return normal intersection
         return a - f;
+    }
+    public static float RayCast(Ray ray, Sphere sphere) {
+        float t = -1;
+        if (!Raycast(ray,sphere,out t)) {
+            return -1;
+        }
+        return t;
     }
     public static bool Raycast(Ray ray, Sphere sphere, out Point p) {
         float t = -1;
