@@ -26,11 +26,17 @@ class LinesAndRays {
         //ray is inside
         else if (eSq < (r * r)) {
             t =  a + f;//reverse direction
-            return true;
+            if (t >= 0) {
+                return true;
+            }
+            return false;
         }
         //else return normal intersection
         t = a - f;
-        return true;
+        if (t >= 0) {
+            return true;
+        }
+        return false;
     }
     public static float RayCast(Ray ray, Sphere sphere) {
         float t = -1;
