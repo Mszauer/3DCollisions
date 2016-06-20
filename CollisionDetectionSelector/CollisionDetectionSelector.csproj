@@ -59,6 +59,7 @@
     <Compile Include="Collisions\RayCollisions.cs" />
     <Compile Include="Collisions\SphereCollisions.cs" />
     <Compile Include="Intersects.cs" />
+    <Compile Include="LinesAndRays.cs" />
     <Compile Include="Math\Matrix2.cs" />
     <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Math\Matrix4.cs" />
@@ -85,11 +86,13 @@
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\LineSample.cs" />
+    <Compile Include="Samples\PlanePlaneIntersection.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
     <Compile Include="Samples\PointOnLineSample.cs" />
     <Compile Include="Samples\PointOnPlaneSample.cs" />
     <Compile Include="Samples\PointOnRay.cs" />
     <Compile Include="Samples\PointSample.cs" />
+    <Compile Include="Samples\RaycastSphere.cs" />
     <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
     <Compile Include="Samples\SphereAABBIntersection.cs" />

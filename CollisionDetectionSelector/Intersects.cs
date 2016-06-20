@@ -78,4 +78,10 @@ class Intersects {
     public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
         return AABBPlaneIntersect(aabb, p);
     }
+    public static bool PlanePlaneIntersect(Plane p1, Plane p2) {
+        //find direction of intersection
+        Vector3 dir = Vector3.Cross(p1.Normal, p2.Normal);
+        //if lengthsq = 0, planes are parallel or coincident
+        return (Vector3.Dot(dir, dir) > 0.00001f);
+    }
 }
