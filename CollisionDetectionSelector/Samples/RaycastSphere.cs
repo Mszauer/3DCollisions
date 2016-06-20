@@ -23,7 +23,7 @@ namespace CollisionDetectionSelector.Samples {
             new Touple(-2, 0, 0, 2, 0, 0, 0, 0, 0, 2, true),
             new Touple(-2, 2, 0, 2, -1, 2, 0, 0, 0, 2, true),
             new Touple(2, 1, 0, 2, 0, 0, 2, 0, 0, 2, true),
-            new Touple(-2, 1, 0, -1, 0, 0, 2, 0, 0, 2, false),
+            new Touple(-2, 1, 0, -1, 0, 0, 2, 0, 0, 2, false), //causes the error
             new Touple(-5, 1, 0, 2, 0.4f, 0, 2, 0, 0, 2, false)
         };
 

@@ -20,14 +20,17 @@ class LinesAndRays {
 
         //no collision
         if (((r * r) - eSq + (a * a)) < 0f) {
-            return -1;//-1 is invalid
+            t = -1;//-1 is invalid
+            return false;
         }
         //ray is inside
         else if (eSq < (r * r)) {
-            return a + f;//reverse direction
+            t =  a + f;//reverse direction
+            return true;
         }
         //else return normal intersection
-        return a - f;
+        t = a - f;
+        return true;
     }
     public static float RayCast(Ray ray, Sphere sphere) {
         float t = -1;
