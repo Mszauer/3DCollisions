@@ -103,4 +103,32 @@ class LinesAndRays {
         p = new Point(ray.Position.ToVector() + ray.Normal * t);
         return result;
     }
+    public static bool RaycastPlane(Ray ray, Plane plane, out float t) {
+        float nd = Vector3.Dot(ray.Normal, plane.Normal);
+        float pn = Vector3.Dot(ray.Position.ToVector(), plane.Normal);
+
+        if (nd >= 0f) {
+            t = -1;
+            return false;
+        }
+        t = (plane.Distance - pn) / nd;
+        
+        if (t >= 0f) {
+            return true;
+        }
+        return false;
+    }
+    public static float RaycastPlane(Ray ray,Plane plane) {
+        float t = -1;
+        if (!RaycastPlane(ray,plane,out t)) {
+            return -1;
+        }
+        return t;
+    }
+    public static bool RaycastPlane(Ray ray, Plane plane, out Point p) {
+        float t = -1;
+        bool result = RaycastPlane(ray, plane, out t);
+        p = new Point(ray.Position.ToVector() + ray.Normal*t);
+        return result;
+    }
 }
