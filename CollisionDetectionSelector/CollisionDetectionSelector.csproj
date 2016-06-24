@@ -92,6 +92,7 @@
     <Compile Include="Samples\PointOnPlaneSample.cs" />
     <Compile Include="Samples\PointOnRay.cs" />
     <Compile Include="Samples\PointSample.cs" />
+    <Compile Include="Samples\RaycastAABB.cs" />
     <Compile Include="Samples\RaycastSphere.cs" />
     <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />

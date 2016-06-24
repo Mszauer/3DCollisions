@@ -35,7 +35,7 @@ namespace CollisionDetectionSelector.Samples {
 
             foreach (Touple touple in touples) {
                 float t = 0f;
-                if (LinesAndRays.Raycast(touple.ray, touple.sphere, out t) != touple.result) {
+                if (LinesAndRays.RaycastSphere(touple.ray, touple.sphere, out t) != touple.result) {
                     LogError("Expected ray: " + touple.ray + "\nTo " +
                         (touple.result ? "intersect" : "not intersect")
                     + " sphere: " + touple.sphere);
@@ -60,7 +60,7 @@ namespace CollisionDetectionSelector.Samples {
                 touple.ray.Render();
                 if (touple.result) {
                     Point p = new Point();
-                    LinesAndRays.Raycast(touple.ray, touple.sphere, out p);
+                    LinesAndRays.RaycastSphere(touple.ray, touple.sphere, out p);
                     GL.Color3(0f, 0f, 1f);
                     p.Render();
                     GL.Color3(0f, 1f, 0f);

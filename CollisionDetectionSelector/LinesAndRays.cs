@@ -3,7 +3,11 @@ using OpenTK.Graphics.OpenGL;
 using CollisionDetectionSelector.Primitive;
 
 class LinesAndRays {
-    public static bool Raycast(Ray ray, Sphere sphere, out float t) {
+    #region HelperFunctions
+    public static float Max(float a, float b) { return System.Math.Max(a, b); }
+    public static float Min(float a, float b) { return System.Math.Min(a, b); }
+    #endregion
+    public static bool RaycastSphere(Ray ray, Sphere sphere, out float t) {
         //look at image to understand how to get each point
         //https://gdbooks.gitbooks.io/3dcollisions/content/Chapter3/raycast_image_4.png
         Vector3 p0 = new Vector3(ray.Position.X, ray.Position.Y, ray.Position.Z);
@@ -38,17 +42,65 @@ class LinesAndRays {
         }
         return false;
     }
-    public static float RayCast(Ray ray, Sphere sphere) {
+    public static float RaycastSphere(Ray ray, Sphere sphere) {
         float t = -1;
-        if (!Raycast(ray,sphere,out t)) {
+        if (!RaycastSphere(ray,sphere,out t)) {
             return -1;
         }
         return t;
     }
-    public static bool Raycast(Ray ray, Sphere sphere, out Point p) {
+    public static bool RaycastSphere(Ray ray, Sphere sphere, out Point p) {
         float t = -1;
-        bool result = Raycast(ray, sphere, out t);
+        bool result = RaycastSphere(ray, sphere, out t);
         p = new Point(ray.Position.ToVector() + ray.Normal*t);
+        return result;
+    }
+    public static bool RaycastAABB(Ray ray, AABB aabb,out float t) {
+        float t1 = (aabb.Min.X - ray.Position.X) / ray.Normal.X;
+        float t2 = (aabb.Max.X - ray.Position.X) / ray.Normal.X;
+        float t3 = (aabb.Max.Y - ray.Position.Y) / ray.Normal.Y;
+        float t4 = (aabb.Min.Y - ray.Position.Y) / ray.Normal.Y;
+        float t5 = (aabb.Max.Z - ray.Position.Z) / ray.Normal.Z;
+        float t6 = (aabb.Min.Z - ray.Position.Z) / ray.Normal.Z;
+
+        //find the biggest of the smallest
+        float tmin = Max(Max(Min(t1, t2),Min(t3, t4)),Min(t5, t6));
+        //find the smallest of the biggest
+        float tmax = Min(Min(Max(t1, t2),Max(t3, t4)),Max(t5, t6));
+
+        // if tmax < 0, ray (line) is intersecting AABB, but whole AABB is behing us
+        if (tmax < 0) {
+            t = -1;
+            return false; //intersects before origin
+        }
+        // if tmin > tmax, ray doesn't intersect AABB
+        if (tmin > tmax) {
+            t = 1;
+            return false;//no intersection
+        }
+        if (tmin < 0f) {
+            t = tmax;
+            if (t >= 0) {
+                return true;
+            }
+        }
+        t = tmin;
+        if (t >= 0) {
+            return true;
+        }
+        return false;
+    }
+    public static float RaycastAABB(Ray ray,AABB aabb) {
+        float t = -1;
+        if (!RaycastAABB(ray,aabb,out t)) {
+            return -1;
+        }
+        return t;
+    }
+    public static bool RaycastAABB(Ray ray,AABB aabb, out Point p) {
+        float t = -1;
+        bool result = RaycastAABB(ray, aabb, out t);
+        p = new Point(ray.Position.ToVector() + ray.Normal * t);
         return result;
     }
 }
