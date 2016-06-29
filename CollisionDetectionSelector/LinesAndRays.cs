@@ -165,7 +165,7 @@ class LinesAndRays {
         //create ray out of line
         Ray r = new Ray();
         r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);
-        r.Normal = line.Start.ToVector() - line.End.ToVector();
+        r.Normal = (line.End.ToVector() - line.Start.ToVector());
 
         //begin linecast logic
         float t = -1;
@@ -182,7 +182,6 @@ class LinesAndRays {
             result = new Point(line.End.ToVector());
             return false;
         }
-
         //passed all tests
         result = new Point(r.Position.ToVector() + r.Normal * t);
         return true;

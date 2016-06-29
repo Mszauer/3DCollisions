@@ -25,8 +25,8 @@ namespace CollisionDetectionSelector.Samples {
             for (int i = 0; i < results.Length; ++i) {
                 if (LinesAndRays.LinecastAABB(lines[i], aabb, out result) != results[i]) {
                     LogError("Line at index " + i + " was " +
-                        (results[i] ? "expected" : "not expected") +
-                        "to intersect the test aabb");
+                        (results[i] ? " expected" : " not expected") +
+                        " to intersect the test aabb");
                 }
             }
         }
