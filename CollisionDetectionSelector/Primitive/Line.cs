@@ -8,12 +8,14 @@ namespace CollisionDetectionSelector.Primitive {
         public Point End;
         public float Length {
             get {
-                return (float)Math.Sqrt(Vector3.Dot(new Vector3(Start.X, Start.Y, Start.Z), new Vector3(End.X, End.Y, End.Z)));
+                Vector3 line = End.ToVector() - Start.ToVector();
+                return line.Length();
             }
         }
         public float LengthSq {
             get {
-                return Vector3.Dot(new Vector3(Start.X, Start.Y, Start.Z), new Vector3(End.X, End.Y, End.Z));
+                Vector3 line = End.ToVector()-Start.ToVector();
+                return line.LengthSquared();
             }
         }
         public Line(Line copy) {

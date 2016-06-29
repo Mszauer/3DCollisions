@@ -187,7 +187,24 @@ class LinesAndRays {
         return true;
     }
     public static bool LinecastPlane(Line line, Plane plane, out Point result) {
-        result = new Point(0f, 0f, 0f);
+        Ray r = new Ray();
+        r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);
+        r.Normal = line.End.ToVector() - line.Start.ToVector();
+
+        float t = -1;
+        if (!RaycastPlane(r,plane,out t)) {
+            result = new Point(0f, 0f, 0f);
+            return false;
+        }
+        if (t < 0) {
+            result = new Point(line.Start.ToVector());
+            return false;
+        }
+        if (t * t > line.LengthSq) {
+            result = new Point(line.End.ToVector());
+            return false;
+        }
+        result = new Point(r.Position.ToVector() + r.Normal * t);
         return true;
     }
 }
