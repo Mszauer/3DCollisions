@@ -131,4 +131,61 @@ class LinesAndRays {
         p = new Point(ray.Position.ToVector() + ray.Normal*t);
         return result;
     }
+    public static bool LinecastSphere(Line line, Sphere sphere, out Point result) {
+        Ray r = new Ray();
+        r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);
+        //normal points from start to end, by value
+        //the normal setter will automatically normalize this
+        r.Normal = (line.End.ToVector() - line.Start.ToVector());
+
+        //line case logic
+        float t = -1;
+        if (!RaycastSphere(r,sphere,out t)) { //this changes t
+            //if raycast returns false the point was never on the line
+            result = new Point(0f, 0f, 0f);
+            return false;
+        }
+        //if t is < 0 , point is behind the start point
+        if (t < 0) {
+            //by value, call new point don't use refernece
+            result = new Point(line.Start.ToVector());
+            return false;
+        }
+        //if t is longer than length of line, intersection is after start point
+        else if (t*t > line.LengthSq) {
+            result = new Point(line.End.ToVector());
+            return false;
+        }
+        // If we made it here, the line intersected the sphere
+        result = new Point(r.Position.ToVector() + r.Normal * t);
+        return true;
+
+    }
+    public static bool LinecastAABB(Line line, AABB aabb, out Point result) {
+        //create ray out of line
+        Ray r = new Ray();
+        r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);
+        r.Normal = line.Start.ToVector() - line.End.ToVector();
+
+        //begin linecast logic
+        float t = -1;
+        if (!RaycastAABB(r,aabb, out t)) {
+            //false = point was never in aabb
+            result = new Point(0f, 0f, 0f);
+            return false;
+        }
+        if (t < 0) { //behind start point
+            result = new Point(line.Start.ToVector());
+            return false;
+        }
+        else if (t*t > line.LengthSq) {//intersection after start point
+            result = new Point(line.End.ToVector());
+            return false;
+        }
+
+        //passed all tests
+        result = new Point(r.Position.ToVector() + r.Normal * t);
+        return true;
+
+    }
 }
