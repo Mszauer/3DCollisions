@@ -86,6 +86,7 @@
     <Compile Include="Samples\ClosestPointSample.cs" />
     <Compile Include="Samples\ConsoleSample.cs" />
     <Compile Include="Samples\LinecastAABB.cs" />
+    <Compile Include="Samples\LinecastPlane.cs" />
     <Compile Include="Samples\LinecastSphere.cs" />
     <Compile Include="Samples\LineSample.cs" />
     <Compile Include="Samples\PlanePlaneIntersection.cs" />

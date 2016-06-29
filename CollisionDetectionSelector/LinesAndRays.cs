@@ -58,10 +58,10 @@ class LinesAndRays {
     public static bool RaycastAABB(Ray ray, AABB aabb,out float t) {
         float t1 = (aabb.Min.X - ray.Position.X) / ray.Normal.X;
         float t2 = (aabb.Max.X - ray.Position.X) / ray.Normal.X;
-        float t3 = (aabb.Max.Y - ray.Position.Y) / ray.Normal.Y;
-        float t4 = (aabb.Min.Y - ray.Position.Y) / ray.Normal.Y;
-        float t5 = (aabb.Max.Z - ray.Position.Z) / ray.Normal.Z;
-        float t6 = (aabb.Min.Z - ray.Position.Z) / ray.Normal.Z;
+        float t3 = (aabb.Min.Y - ray.Position.Y) / ray.Normal.Y;
+        float t4 = (aabb.Max.Y - ray.Position.Y) / ray.Normal.Y;
+        float t5 = (aabb.Min.Z - ray.Position.Z) / ray.Normal.Z;
+        float t6 = (aabb.Max.Z - ray.Position.Z) / ray.Normal.Z;
 
         //find the biggest of the smallest
         float tmin = Max(Max(Min(t1, t2),Min(t3, t4)),Min(t5, t6));
@@ -75,7 +75,7 @@ class LinesAndRays {
         }
         // if tmin > tmax, ray doesn't intersect AABB
         if (tmin > tmax) {
-            t = 1;
+            t = -1;
             return false;//no intersection
         }
         if (tmin < 0f) {
@@ -185,6 +185,9 @@ class LinesAndRays {
         //passed all tests
         result = new Point(r.Position.ToVector() + r.Normal * t);
         return true;
-
+    }
+    public static bool LinecastPlane(Line line, Plane plane, out Point result) {
+        result = new Point(0f, 0f, 0f);
+        return true;
     }
 }
