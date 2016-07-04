@@ -46,6 +46,48 @@ namespace CollisionDetectionSelector.Collisions {
             return PointInTriangle(p, t);
         }
         
-        
+        public static Point ClosestPointTriangle(Point _p,Triangle t) {
+            Point point = new Point(_p.X, _p.Y, _p.Z);
+            //create plane out fo triangle
+            Plane plane = new Plane(t.p0, t.p1, t.p2);
+
+            //get closest point to plane
+            point = Collisions.PlaneCollision.ClosestPoint(plane, point);
+
+            if (PointInTriangle(t, point)) {
+                //if point is in triangle, return it
+                return new Point(point.X, point.Y, point.Z);
+            }
+
+            //break triangle down into Line components
+            Line AB = new Line(t.p0, t.p1);
+            Line BC = new Line(t.p1, t.p2);
+            Line CA = new Line(t.p2, t.p0);
+
+            //find closest point to each line
+            Point c1 = Collisions.LineCollisions.ClosestPoint(AB, point);
+            Point c2 = Collisions.LineCollisions.ClosestPoint(BC, point);
+            Point c3 = Collisions.LineCollisions.ClosestPoint(CA, point);
+
+            //mag is magnitudeSquared. Magnitude to unknown point
+            float mag1 = (point.ToVector() - c1.ToVector()).LengthSquared();
+            float mag2 = (point.ToVector() - c2.ToVector()).LengthSquared();
+            float mag3 = (point.ToVector() - c3.ToVector()).LengthSquared();
+
+            //find smallest magnitude(shortest distance)
+            float min = System.Math.Min(mag1, mag2);
+            min = System.Math.Min(min, mag3);
+
+            if (min== mag1) {
+                return c1;
+            }
+            else if (min == mag2) {
+                return c2;
+            }
+            return c3;
+        }
+        public static Point ClosestPointTriangle(Triangle t, Point p) {
+            return ClosestPointTriangle(p, t);
+        }
     }
 }
