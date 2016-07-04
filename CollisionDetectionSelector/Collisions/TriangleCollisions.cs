@@ -89,5 +89,22 @@ namespace CollisionDetectionSelector.Collisions {
         public static Point ClosestPointTriangle(Triangle t, Point p) {
             return ClosestPointTriangle(p, t);
         }
+        public static bool SphereIntersect(Triangle triangle, Sphere sphere) {
+            //get closest point on triangle to center of sphere
+            Point p = ClosestPointTriangle(sphere.Position, triangle);
+
+            //check distanceSq between center and point on triangle
+            float distSq = Vector3.LengthSquared(sphere.vPosition - p.ToVector());
+
+            //if distance is < r2 then there is a collision
+            if (distSq < (sphere.Radius * sphere.Radius)) {
+                return true;
+            }
+
+            return false;
+        }
+        public static bool SphereIntersect(Sphere sphere, Triangle triangle) {
+            return SphereIntersect(triangle, sphere);
+        }
     }
 }

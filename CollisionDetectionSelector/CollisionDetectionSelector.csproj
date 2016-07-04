@@ -109,6 +109,7 @@
     <Compile Include="Samples\SphereAABBIntersection.cs" />
     <Compile Include="Samples\SpherePlaneIntersection.cs" />
     <Compile Include="Samples\SphereSphereIntersection.cs" />
+    <Compile Include="Samples\TriangleSphereIntersection.cs" />
     <Compile Include="Samples\WindowSample.cs" />
   </ItemGroup>
   <ItemGroup>
