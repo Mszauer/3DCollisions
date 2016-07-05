@@ -103,69 +103,38 @@ namespace CollisionDetectionSelector.Collisions {
 
             return false;
         }
+
         public static bool SphereIntersect(Sphere sphere, Triangle triangle) {
             return SphereIntersect(triangle, sphere);
         }
+
         public static bool AABBIntersect(Triangle triangle, AABB aabb) {
             //get triangle corners as vectors
-            /*
-            Vector3 v0 = triangle.p0.ToVector();
-            Vector3 v1 = triangle.p1.ToVector();
-            Vector3 v2 = triangle.p2.ToVector();
-            */
             Vector3[] v = new Vector3[3] { triangle.p0.ToVector(),
                                           triangle.p1.ToVector(),
                                           triangle.p2.ToVector() };
+
             //convert aabb to center-extents
             Vector3 center = aabb.Center.ToVector();
             Vector3 extent = aabb.Extents;
 
             //translate triangle so aabb is center of world
-            /*
-            v0 -= center;
-            v1 -= center;
-            v2 -= center;
-            */
             for (int i = 0; i < 3; i++) {
                 v[i] -= center;
             }
-            /*
-            //get edge vectors of triangle ABC
-            Vector3 f0 = v1 - v0;//b-a
-            Vector3 f1 = v2 - v1;//c-b
-            Vector3 f2 = v0 - v2;//a-c
-            */
+
             Vector3[] f = new Vector3[3] { v[1] - v[0]/*A-B */, v[2] - v[1]/*B-C */, v[0] - v[2] /*A-C */};
 
             //find face normals of aabb (normals are xyz axis
-
-            Vector3 u0 = new Vector3(1.0f, 0.0f, 0.0f);
-            Vector3 u1 = new Vector3(0.0f, 1.0f, 0.0f);
-            Vector3 u2 = new Vector3(0.0f, 0.0f, 1.0f);
-
-            Vector3[] u = new Vector3[3] { u0, u1, u2 };
-
-            // Compute the 9 axis
-            /*
-            //recreated as axis staggered array below
-            Vector3 axis_u0_f0 = Vector3.Cross(u0, f0);
-            Vector3 axis_u0_f1 = Vector3.Cross(u0, f1);
-            Vector3 axis_u0_f2 = Vector3.Cross(u0, f2);
-
-            Vector3 axis_u1_f0 = Vector3.Cross(u1, f0);
-            Vector3 axis_u1_f1 = Vector3.Cross(u1, f1);
-            Vector3 axis_u1_f2 = Vector3.Cross(u2, f2);
-
-            Vector3 axis_u2_f0 = Vector3.Cross(u2, f0);
-            Vector3 axis_u2_f1 = Vector3.Cross(u2, f1);
-            Vector3 axis_u2_f2 = Vector3.Cross(u2, f2);
-            */
+            Vector3[] u = new Vector3[3] { new Vector3(1.0f,0.0f,0.0f),
+                                           new Vector3(0.0f,1.0f,0.0f),
+                                           new Vector3(0.0f,0.0f,1.0f)};
 
             //create all possible axis
             //u=face normals of AABB
             //f = edge vectors of triangle ABC
-            for (int _u = 0; _u < u.Length-1; _u++) {
-                for(int _f = 0; _f < f.Length-1; _f++) {
+            for (int _u = 0; _u < u.Length; _u++) {
+                for(int _f = 0; _f < f.Length; _f++) {
                     Vector3 testAxis = Vector3.Cross(u[_u], f[_f]);
                     //Test SAT
                     if (!TriangleAABBSat(v, u, extent, testAxis)) {
@@ -177,7 +146,6 @@ namespace CollisionDetectionSelector.Collisions {
                 // of the triangle intersects the bounding box of the AABB
                 // that is to say, the seperating axis for all tests are axis aligned:
                 // axis1: (1, 0, 0), axis2: (0, 1, 0), axis3 (0, 0, 1)
-
                 // Do the SAT given the 3 primary axis of the AABB
                 if (!TriangleAABBSat(v, u, extent, u[_u])) {
                     return false;
@@ -187,12 +155,15 @@ namespace CollisionDetectionSelector.Collisions {
             // Finally, we have one last axis to test, the face normal of the triangle
             // We can get the normal of the triangle by crossing the first two line segments
             Vector3 triangleNormal = Vector3.Cross(f[0], f[1]);
-            if (!TriangleAABBSat(u, v, extent, triangleNormal)) {
+            if (!TriangleAABBSat(v, u, extent, triangleNormal)) {
                 return false;
             }
 
             // Passed testing for all 13 seperating axis that exist!
             return true;
+        }
+        public static bool AABBIntersect(AABB aabb, Triangle triangle) {
+            return AABBIntersect(triangle,aabb)
         }
         private static bool TriangleAABBSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
