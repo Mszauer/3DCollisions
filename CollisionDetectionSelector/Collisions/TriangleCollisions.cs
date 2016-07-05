@@ -106,5 +106,99 @@ namespace CollisionDetectionSelector.Collisions {
         public static bool SphereIntersect(Sphere sphere, Triangle triangle) {
             return SphereIntersect(triangle, sphere);
         }
+        public static bool AABBIntersect(Triangle triangle, AABB aabb) {
+            //get triangle corners as vectors
+            /*
+            Vector3 v0 = triangle.p0.ToVector();
+            Vector3 v1 = triangle.p1.ToVector();
+            Vector3 v2 = triangle.p2.ToVector();
+            */
+            Vector3[] v = new Vector3[3] { triangle.p0.ToVector(),
+                                          triangle.p1.ToVector(),
+                                          triangle.p2.ToVector() };
+            //convert aabb to center-extents
+            Vector3 center = aabb.Center.ToVector();
+            Vector3 extent = aabb.Extents;
+
+            //translate triangle so aabb is center of world
+            /*
+            v0 -= center;
+            v1 -= center;
+            v2 -= center;
+            */
+            for (int i = 0; i < 3; i++) {
+                v[i] -= center;
+            }
+            /*
+            //get edge vectors of triangle ABC
+            Vector3 f0 = v1 - v0;//b-a
+            Vector3 f1 = v2 - v1;//c-b
+            Vector3 f2 = v0 - v2;//a-c
+            */
+            //find face normals of aabb (normals are xyz axis
+            
+            Vector3 u0 = new Vector3(1.0f, 0.0f, 0.0f);
+            Vector3 u1 = new Vector3(0.0f, 1.0f, 0.0f);
+            Vector3 u2 = new Vector3(0.0f, 0.0f, 1.0f);
+
+            // Compute the 9 axis
+            /*
+            //recreated as axis staggered array below
+            Vector3 axis_u0_f0 = Vector3.Cross(u0, f0);
+            Vector3 axis_u0_f1 = Vector3.Cross(u0, f1);
+            Vector3 axis_u0_f2 = Vector3.Cross(u0, f2);
+
+            Vector3 axis_u1_f0 = Vector3.Cross(u1, f0);
+            Vector3 axis_u1_f1 = Vector3.Cross(u1, f1);
+            Vector3 axis_u1_f2 = Vector3.Cross(u2, f2);
+
+            Vector3 axis_u2_f0 = Vector3.Cross(u2, f0);
+            Vector3 axis_u2_f1 = Vector3.Cross(u2, f1);
+            Vector3 axis_u2_f2 = Vector3.Cross(u2, f2);
+            */
+
+            Vector3[] f = new Vector3[3] { v1 - v0/*A-B */, v2 - v1/*B-C */, v0 - v2 /*A-C */};
+            Vector3[] u = new Vector3[3] { u0, u1, u2 };
+
+            Vector3[][] axis = new Vector3[3][];
+            for (int i = 0; i < 3; i++) {
+                axis[i] = new Vector3[3];
+            }
+            //create all possible axis
+            //u=face normals of AABB
+            //f = edge vectors of triangle ABC
+            for (int _u = 0; _u < 3; _u++) {
+                for(int _f = 0; _f < 3; _f++) {
+                    axis[_u][_f] = Vector3.Cross(u[_u], f[_f]);
+                }
+            }
+            //Test SAT
+        }
+        protected bool TriangleSat(Vector3 v0,Vector3 v1, Vector3 v2, Vector3 u0,Vector3 u1,Vector3 u2,Vector3 extents,Vector3 axii0,Vector3 axii1,Vector3 axii2) {
+            // Project all 3 vertices of the triangle onto the Seperating axis
+            float p0 = Vector3.Dot(v0, axii0);
+            float p1 = Vector3.Dot(v1, axii1);
+            float p2 = Vector3.Dot(v2, axii2);
+            // Project the AABB onto the seperating axis
+            // We don't care about the end points of the prjection
+            // just the length of the half-size of the AABB
+            // That is, we're only casting the extents onto the 
+            // seperating axis, not the AABB center. We don't
+            // need to cast the center, because we know that the
+            // aabb is at origin compared to the triangle!
+            float r = extents.X * Math.Abs(Vector3.Dot(u0, axii0)) +
+                        extents.Y * Math.Abs(Vector3.Dot(u1, axii0)) +
+                        extents.Z * Math.Abs(Vector3.Dot(u2, axii0));
+            // Now do the actual test, basically see if either of
+            // the most extreme of the triangle points intersects r
+            // You might need to write Min & Max functions that take 3 arguments
+            if (System.Math.Max(-(System.Math.Max(System.Math.Max(p0, p1), p2)), System.Math.Min(System.Math.Min(p0, p1), p2)) > r) {
+                // This means BOTH of the points of the projected triangle
+                // are outside the projected half-length of the AABB
+                // Therefore the axis is seperating and we can exit
+                return false;
+            }
+            return true;
+        }
     }
 }
