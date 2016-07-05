@@ -157,7 +157,7 @@ namespace CollisionDetectionSelector.Collisions {
             Vector3 axis_u2_f2 = Vector3.Cross(u2, f2);
             */
 
-            Vector3[] f = new Vector3[3] { v1 - v0/*A-B */, v2 - v1/*B-C */, v0 - v2 /*A-C */};
+            Vector3[] f = new Vector3[3] { v[1] - v[0]/*A-B */, v[2] - v[1]/*B-C */, v[0] - v[2] /*A-C */};
             Vector3[] u = new Vector3[3] { u0, u1, u2 };
 
             Vector3[][] axis = new Vector3[3][];
@@ -174,11 +174,11 @@ namespace CollisionDetectionSelector.Collisions {
             }
             //Test SAT
         }
-        protected bool TriangleSat(Vector3 v0,Vector3 v1, Vector3 v2, Vector3 u0,Vector3 u1,Vector3 u2,Vector3 extents,Vector3 axii0,Vector3 axii1,Vector3 axii2) {
+        protected bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3[] axis,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
-            float p0 = Vector3.Dot(v0, axii0);
-            float p1 = Vector3.Dot(v1, axii1);
-            float p2 = Vector3.Dot(v2, axii2);
+            float p0 = Vector3.Dot(v[0], axis[0]);
+            float p1 = Vector3.Dot(v[1], axis[1]);
+            float p2 = Vector3.Dot(v[2], axis[2]);
             // Project the AABB onto the seperating axis
             // We don't care about the end points of the prjection
             // just the length of the half-size of the AABB
@@ -186,9 +186,9 @@ namespace CollisionDetectionSelector.Collisions {
             // seperating axis, not the AABB center. We don't
             // need to cast the center, because we know that the
             // aabb is at origin compared to the triangle!
-            float r = extents.X * Math.Abs(Vector3.Dot(u0, axii0)) +
-                        extents.Y * Math.Abs(Vector3.Dot(u1, axii0)) +
-                        extents.Z * Math.Abs(Vector3.Dot(u2, axii0));
+            float r = extents.X * Math.Abs(Vector3.Dot(u[0], testingAxii)) +
+                        extents.Y * Math.Abs(Vector3.Dot(u[1], testingAxii)) +
+                        extents.Z * Math.Abs(Vector3.Dot(u[2], testingAxii));
             // Now do the actual test, basically see if either of
             // the most extreme of the triangle points intersects r
             // You might need to write Min & Max functions that take 3 arguments
@@ -198,7 +198,7 @@ namespace CollisionDetectionSelector.Collisions {
                 // Therefore the axis is seperating and we can exit
                 return false;
             }
-            return true;
+            return true; //does this??
         }
     }
 }
