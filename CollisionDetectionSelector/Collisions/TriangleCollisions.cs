@@ -161,26 +161,40 @@ namespace CollisionDetectionSelector.Collisions {
             Vector3 axis_u2_f2 = Vector3.Cross(u2, f2);
             */
 
-
-            Vector3[][] axis = new Vector3[3][];
-            for (int i = 0; i < 3; i++) {
-                axis[i] = new Vector3[3];
-            }
             //create all possible axis
             //u=face normals of AABB
             //f = edge vectors of triangle ABC
-            for (int _u = 0; _u < 3; _u++) {
-                for(int _f = 0; _f < 3; _f++) {
-                    axis[_u][_f] = Vector3.Cross(u[_u], f[_f]);
+            for (int _u = 0; _u < u.Length-1; _u++) {
+                for(int _f = 0; _f < f.Length-1; _f++) {
+                    Vector3 testAxis = Vector3.Cross(u[_u], f[_f]);
                     //Test SAT
-                    if (!TriangleSat(v, u, extent, axis[_u][_f])) {
+                    if (!TriangleAABBSat(v, u, extent, testAxis)) {
                         return false;
                     }
                 }
+                // Next, we have 3 face normals from the AABB
+                // for these tests we are conceptually checking if the bounding box
+                // of the triangle intersects the bounding box of the AABB
+                // that is to say, the seperating axis for all tests are axis aligned:
+                // axis1: (1, 0, 0), axis2: (0, 1, 0), axis3 (0, 0, 1)
+
+                // Do the SAT given the 3 primary axis of the AABB
+                if (!TriangleAABBSat(v, u, extent, u[_u])) {
+                    return false;
+                }
             }
-           
+            
+            // Finally, we have one last axis to test, the face normal of the triangle
+            // We can get the normal of the triangle by crossing the first two line segments
+            Vector3 triangleNormal = Vector3.Cross(f[0], f[1]);
+            if (!TriangleAABBSat(u, v, extent, triangleNormal)) {
+                return false;
+            }
+
+            // Passed testing for all 13 seperating axis that exist!
+            return true;
         }
-        private static bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
+        private static bool TriangleAABBSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
             float p0 = Vector3.Dot(v[0], testingAxii);
             float p1 = Vector3.Dot(v[1], testingAxii);
@@ -204,7 +218,7 @@ namespace CollisionDetectionSelector.Collisions {
                 // Therefore the axis is seperating and we can exit
                 return false;
             }
-            return true; //is this needed?
+            return true;
         }
     }
 }
