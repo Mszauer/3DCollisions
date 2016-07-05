@@ -176,11 +176,11 @@ namespace CollisionDetectionSelector.Collisions {
             }
             //Test SAT
         }
-        protected bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3[] axis,Vector3 testingAxii) {
+        protected bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
-            float p0 = Vector3.Dot(v[0], axis[0]);
-            float p1 = Vector3.Dot(v[1], axis[1]);
-            float p2 = Vector3.Dot(v[2], axis[2]);
+            float p0 = Vector3.Dot(v[0], testingAxii);
+            float p1 = Vector3.Dot(v[1], testingAxii);
+            float p2 = Vector3.Dot(v[2], testingAxii);
             // Project the AABB onto the seperating axis
             // We don't care about the end points of the prjection
             // just the length of the half-size of the AABB
