@@ -175,8 +175,16 @@ namespace CollisionDetectionSelector.Collisions {
                 }
             }
             //Test SAT
+            for (int i = 0; i < 3; i++) {
+                for(int j = 0; j < 3; j++) {
+                    if (!TriangleSat(v, u, extent, axis[i][j])) {
+                        return false;
+                    }
+
+                }
+            }
         }
-        protected bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
+        private static bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
             float p0 = Vector3.Dot(v[0], testingAxii);
             float p1 = Vector3.Dot(v[1], testingAxii);
