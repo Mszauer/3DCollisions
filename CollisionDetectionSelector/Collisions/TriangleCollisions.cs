@@ -163,7 +163,7 @@ namespace CollisionDetectionSelector.Collisions {
             return true;
         }
         public static bool AABBIntersect(AABB aabb, Triangle triangle) {
-            return AABBIntersect(triangle,aabb)
+            return AABBIntersect(triangle, aabb);
         }
         private static bool TriangleAABBSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
