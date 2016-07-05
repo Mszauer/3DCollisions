@@ -172,17 +172,13 @@ namespace CollisionDetectionSelector.Collisions {
             for (int _u = 0; _u < 3; _u++) {
                 for(int _f = 0; _f < 3; _f++) {
                     axis[_u][_f] = Vector3.Cross(u[_u], f[_f]);
-                }
-            }
-            //Test SAT
-            for (int i = 0; i < 3; i++) {
-                for(int j = 0; j < 3; j++) {
-                    if (!TriangleSat(v, u, extent, axis[i][j])) {
+                    //Test SAT
+                    if (!TriangleSat(v, u, extent, axis[_u][_f])) {
                         return false;
                     }
-
                 }
             }
+           
         }
         private static bool TriangleSat(Vector3[] v, Vector3[] u,Vector3 extents,Vector3 testingAxii) {
             // Project all 3 vertices of the triangle onto the Seperating axis
