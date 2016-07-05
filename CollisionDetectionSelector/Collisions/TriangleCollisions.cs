@@ -135,11 +135,15 @@ namespace CollisionDetectionSelector.Collisions {
             Vector3 f1 = v2 - v1;//c-b
             Vector3 f2 = v0 - v2;//a-c
             */
+            Vector3[] f = new Vector3[3] { v[1] - v[0]/*A-B */, v[2] - v[1]/*B-C */, v[0] - v[2] /*A-C */};
+
             //find face normals of aabb (normals are xyz axis
-            
+
             Vector3 u0 = new Vector3(1.0f, 0.0f, 0.0f);
             Vector3 u1 = new Vector3(0.0f, 1.0f, 0.0f);
             Vector3 u2 = new Vector3(0.0f, 0.0f, 1.0f);
+
+            Vector3[] u = new Vector3[3] { u0, u1, u2 };
 
             // Compute the 9 axis
             /*
@@ -157,8 +161,6 @@ namespace CollisionDetectionSelector.Collisions {
             Vector3 axis_u2_f2 = Vector3.Cross(u2, f2);
             */
 
-            Vector3[] f = new Vector3[3] { v[1] - v[0]/*A-B */, v[2] - v[1]/*B-C */, v[0] - v[2] /*A-C */};
-            Vector3[] u = new Vector3[3] { u0, u1, u2 };
 
             Vector3[][] axis = new Vector3[3][];
             for (int i = 0; i < 3; i++) {
@@ -198,7 +200,7 @@ namespace CollisionDetectionSelector.Collisions {
                 // Therefore the axis is seperating and we can exit
                 return false;
             }
-            return true; //does this??
+            return true; //is this needed?
         }
     }
 }
