@@ -215,5 +215,51 @@ namespace CollisionDetectionSelector.Collisions {
         public static bool PlaneTriangleIntersection(Plane plane,Triangle triangle) {
             return PlaneTriangleIntersection(triangle, plane);
         }
+
+
+        public static bool TriangleTriangleIntersection(Triangle t1,Triangle t2) {
+            Vector3[] t1Edges = new Vector3[3] { t1.p1.ToVector() - t1.p0.ToVector(),
+                                                 t1.p2.ToVector() - t1.p1.ToVector(),
+                                                 t1.p0.ToVector() - t1.p2.ToVector() };
+
+            Vector3[] t2Edges = new Vector3[3] {t2.p1.ToVector()-t2.p0.ToVector(),
+                                                t2.p2.ToVector()-t2.p1.ToVector(),
+                                                t2.p0.ToVector()-t2.p2.ToVector()};
+            //test 11axis
+            //face normal of t1
+            Vector3 t1FaceNormal = Vector3.Cross(t1Edges[0], t1Edges[1]);
+
+
+            //face normal of t2
+            Vector3 t2FaceNormal = Vector3.Cross(t2Edges[0], t2Edges[1]);
+            //cross products of each of the 3 edges
+
+        }
+        private static Vector2 GetInterval(Triangle triangle, Vector3 axis) {
+            Vector2 interval = new Vector2();
+            //interval.X = min
+            //interval.Y = max
+            interval.X = Vector3.Dot(axis, triangle.p0.ToVector());
+            interval.Y = interval.X;
+
+            float result = Vector3.Dot(axis,triangle.p1.ToVector());
+            interval.X = System.Math.Min(interval.X, result);
+            interval.Y = System.Math.Max(interval.Y, result);
+
+             result = Vector3.Dot(axis, triangle.p2.ToVector());
+            interval.X = System.Math.Min(interval.X, result);
+            interval.Y = System.Math.Max(interval.Y, result);
+            return interval;
+        }
+        private static bool TestAxis(Triangle triangle1, Triangle triangle2,Vector3 axis) {
+            Vector2 i1 = GetInterval(triangle1, axis);
+            Vector2 i2 = GetInterval(triangle2, axis);
+
+            if (i1.Y < i2.X /*i1.max < i2.min*/ || i2.Y < i1.X /*i2.max < i1.min*/) {
+                //intervals overlap on given axis
+                return true;
+            }
+            return false;//no collision
+        }
     }
 }
