@@ -112,6 +112,7 @@
     <Compile Include="Samples\TriangleAABBIntersection.cs" />
     <Compile Include="Samples\TrianglePlaneIntersection.cs" />
     <Compile Include="Samples\TriangleSphereIntersection.cs" />
+    <Compile Include="Samples\TriangleTriangleIntersection.cs" />
     <Compile Include="Samples\WindowSample.cs" />
   </ItemGroup>
   <ItemGroup>

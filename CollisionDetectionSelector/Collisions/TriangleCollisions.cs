@@ -228,12 +228,29 @@ namespace CollisionDetectionSelector.Collisions {
             //test 11axis
             //face normal of t1
             Vector3 t1FaceNormal = Vector3.Cross(t1Edges[0], t1Edges[1]);
-
+            if (TestAxis(t1, t2, t1FaceNormal)) {
+                //seperating axis found
+                return true;
+            }
 
             //face normal of t2
             Vector3 t2FaceNormal = Vector3.Cross(t2Edges[0], t2Edges[1]);
-            //cross products of each of the 3 edges
+            if (TestAxis(t1, t2, t2FaceNormal)) {
+                //seperating axis found
+                return true;
+            }
 
+            //cross products of each of the 3 edges
+            for (int i = 0; i < 3; i++) {
+                Vector3 testAxis = Vector3.Cross(t1Edges[i], t2Edges[i]);
+                if (TestAxis(t1, t2, testAxis)) {
+                    //seperating axis found
+                    return true;
+                }
+            }
+
+            //no seperating axis found, no intersection
+            return false;
         }
         private static Vector2 GetInterval(Triangle triangle, Vector3 axis) {
             Vector2 interval = new Vector2();
