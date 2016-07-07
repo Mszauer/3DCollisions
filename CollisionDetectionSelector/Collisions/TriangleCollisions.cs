@@ -141,7 +141,7 @@ namespace CollisionDetectionSelector.Collisions {
                         return false;
                     }
                 }
-                // Next, we have 3 face normals from the AABB
+               
                 // for these tests we are conceptually checking if the bounding box
                 // of the triangle intersects the bounding box of the AABB
                 // that is to say, the seperating axis for all tests are axis aligned:
@@ -190,6 +190,30 @@ namespace CollisionDetectionSelector.Collisions {
                 return false;
             }
             return true;
+        }
+
+        public static bool PlaneTriangleIntersection(Triangle triangle, Plane plane) {
+            //test each point of triangle against plane
+            float aDist = Collisions.PlaneCollision.DistanceFromPlane(triangle.p0, plane);
+            float bDist = Collisions.PlaneCollision.DistanceFromPlane(triangle.p1, plane);
+            float cDist = Collisions.PlaneCollision.DistanceFromPlane(triangle.p2, plane);
+
+            //if all 3 have same sign, no collision
+            if (aDist < 0 && bDist < 0 && cDist < 0) {
+                return false;
+            }
+            else if (aDist > 0 && bDist > 0 && cDist > 0) {
+                return false;
+            }
+            //if all 3 distances are 0 there is a collision, lies on the plane
+            if (System.Math.Abs(aDist) <= 0.0001f && System.Math.Abs(bDist) <= 0.0001f && System.Math.Abs(cDist) <= 0.0001f) {
+                return true;
+            }
+            //otherwise at least one point is on other side of plane
+            return true;
+        }
+        public static bool PlaneTriangleIntersection(Plane plane,Triangle triangle) {
+            return PlaneTriangleIntersection(triangle, plane);
         }
     }
 }
