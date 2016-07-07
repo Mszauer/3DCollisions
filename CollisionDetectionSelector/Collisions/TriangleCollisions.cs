@@ -253,6 +253,7 @@ namespace CollisionDetectionSelector.Collisions {
             return false;
         }
         private static Vector2 GetInterval(Triangle triangle, Vector3 axis) {
+            //normalize axis
             Vector2 interval = new Vector2();
             //interval.X = min
             //interval.Y = max
@@ -263,14 +264,16 @@ namespace CollisionDetectionSelector.Collisions {
             interval.X = System.Math.Min(interval.X, result);
             interval.Y = System.Math.Max(interval.Y, result);
 
-             result = Vector3.Dot(axis, triangle.p2.ToVector());
+            result = Vector3.Dot(axis, triangle.p2.ToVector());
             interval.X = System.Math.Min(interval.X, result);
             interval.Y = System.Math.Max(interval.Y, result);
             return interval;
         }
         private static bool TestAxis(Triangle triangle1, Triangle triangle2,Vector3 axis) {
-            Vector2 i1 = GetInterval(triangle1, axis);
-            Vector2 i2 = GetInterval(triangle2, axis);
+            Vector3 axisNorm = new Vector3(axis.X,axis.Y,axis.Z);
+            axisNorm.Normalize();
+            Vector2 i1 = GetInterval(triangle1, axisNorm);
+            Vector2 i2 = GetInterval(triangle2, axisNorm);
 
             if (i1.Y < i2.X /*i1.max < i2.min*/ || i2.Y < i1.X /*i2.max < i1.min*/) {
                 //intervals overlap on given axis
