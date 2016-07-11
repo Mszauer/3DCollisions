@@ -230,14 +230,14 @@ namespace CollisionDetectionSelector.Collisions {
             Vector3 t1FaceNormal = Vector3.Cross(t1Edges[0], t1Edges[1]);
             if (TestAxis(t1, t2, t1FaceNormal)) {
                 //seperating axis found
-                return true;
+                return false;
             }
 
             //face normal of t2
             Vector3 t2FaceNormal = Vector3.Cross(t2Edges[0], t2Edges[1]);
             if (TestAxis(t1, t2, t2FaceNormal)) {
                 //seperating axis found
-                return true;
+                return false;
             }
 
             //cross products of each of the 3 edges
@@ -245,12 +245,12 @@ namespace CollisionDetectionSelector.Collisions {
                 Vector3 testAxis = Vector3.Cross(t1Edges[i], t2Edges[i]);
                 if (TestAxis(t1, t2, testAxis)) {
                     //seperating axis found
-                    return true;
+                    return false;
                 }
             }
 
             //no seperating axis found, no intersection
-            return false;
+            return true;
         }
         private static Vector2 GetInterval(Triangle triangle, Vector3 axis) {
             //normalize axis
@@ -280,6 +280,21 @@ namespace CollisionDetectionSelector.Collisions {
                 return true;
             }
             return false;//no collision
+        }
+        private static bool TestAxis(Triangle triangle1, Triangle triangle2, Vector3 a,Vector3 b, Vector3 c, Vector3 d) {
+            Vector3 axis = Vector3.Cross(a - b, c - d);
+
+            if (axis.LengthSquared() < 0.0001f) {
+                //axis is zero, try other combination
+                Vector3 n = Vector3.Cross(a - b, c - a);
+                axis = Vector3.Cross(a * b, n);
+                if (axis.LengthSquared() < 0.0001f) {
+                    //axis still zero, not seperating axis
+                    return false;
+                }
+            }
+            //rest of function
+            return true;
         }
     }
 }
