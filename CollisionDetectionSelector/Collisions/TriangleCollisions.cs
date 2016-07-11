@@ -309,14 +309,22 @@ namespace CollisionDetectionSelector.Collisions {
             if (axis.LengthSquared() < 0.0001f) {
                 //axis is zero, try other combination
                 Vector3 n = Vector3.Cross(a - b, c - a);
-                axis = Vector3.Cross(a * b, n);
+                axis = Vector3.Cross(a - b, n);
                 if (axis.LengthSquared() < 0.0001f) {
                     //axis still zero, not seperating axis
-                    return false;
+                    return true;
                 }
             }
-            //rest of function
-            return true;
+            Vector3 axisNorm = new Vector3(axis.X,axis.Y,axis.Z);
+            axisNorm.Normalize();
+            Vector2 i1 = GetInterval(triangle1, axisNorm);
+            Vector2 i2 = GetInterval(triangle2, axisNorm);
+           
+            if (i1.Y < i2.X /*i1.max < i2.min*/ || i2.Y < i1.X /*i2.max < i1.min*/) {
+                //intervals overlap on given axis
+                return true;
+            }
+            return false;//no collision
         }
     }
 }
