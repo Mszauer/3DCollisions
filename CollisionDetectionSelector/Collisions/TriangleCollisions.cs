@@ -218,13 +218,13 @@ namespace CollisionDetectionSelector.Collisions {
 
 
         public static bool TriangleTriangleIntersection(Triangle t1,Triangle t2) {
-            Vector3[] t1Edges = new Vector3[3] { t1.p1.ToVector() - t1.p0.ToVector(),
-                                                 t1.p2.ToVector() - t1.p1.ToVector(),
-                                                 t1.p0.ToVector() - t1.p2.ToVector() };
-
-            Vector3[] t2Edges = new Vector3[3] {t2.p1.ToVector()-t2.p0.ToVector(),
-                                                t2.p2.ToVector()-t2.p1.ToVector(),
-                                                t2.p0.ToVector()-t2.p2.ToVector()};
+            //Vector3[] t1Edges = new Vector3[3] { t1.p1.ToVector() - t1.p0.ToVector(),
+            //                                     t1.p2.ToVector() - t1.p1.ToVector(),
+            //                                     t1.p0.ToVector() - t1.p2.ToVector() };
+            //
+            //Vector3[] t2Edges = new Vector3[3] {t2.p1.ToVector()-t2.p0.ToVector(),
+            //                                    t2.p2.ToVector()-t2.p1.ToVector(),
+            //                                    t2.p0.ToVector()-t2.p2.ToVector()};
             //test 11axis
             /*
             //face normal of t1
