@@ -230,15 +230,37 @@ namespace CollisionDetectionSelector.Collisions {
                 //seperating axis found
                 return false;
             }
-
-            //cross products of each of the 3 edges
-            if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t2.p1.ToVector(), t2.p0.ToVector())) {
+            /*
+            //Vector3[] t1Edges = new Vector3[3] { t1.p1.ToVector() - t1.p0.ToVector(),
+            //                                     t1.p2.ToVector() - t1.p1.ToVector(),
+            //                                     t1.p0.ToVector() - t1.p2.ToVector() };
+            */
+            //go through each of the edges (0x0,0x1,0x2,1x0,1x,1x2,2x0,2x1,2x2)
+            if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t2.p1.ToVector(), t2.p0.ToVector())) { //0x0
                 return false;
             }
-            if (TestAxis(t1, t2, t1.p2.ToVector(), t1.p1.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) {
+            if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) { //0x1
                 return false;
             }
-            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p0.ToVector(), t2.p2.ToVector())) {
+            if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t2.p0.ToVector(), t2.p2.ToVector())) { //0x2
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p2.ToVector(), t1.p1.ToVector(), t2.p1.ToVector(), t2.p0.ToVector())) { //1x0
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p2.ToVector(), t1.p1.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) { //1x1
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p2.ToVector(), t1.p1.ToVector(), t2.p0.ToVector(), t2.p2.ToVector())) { //1x2
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p1.ToVector(), t2.p0.ToVector())) { //2x0
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) { //2x1
+                return false;
+            }
+            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p0.ToVector(), t2.p2.ToVector())) { //2x2
                 return false;
             }
             //no seperating axis found, no intersection
