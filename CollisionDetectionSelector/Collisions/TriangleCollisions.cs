@@ -312,7 +312,7 @@ namespace CollisionDetectionSelector.Collisions {
                 axis = Vector3.Cross(a - b, n);
                 if (axis.LengthSquared() < 0.0001f) {
                     //axis still zero, not seperating axis
-                    return true;
+                    return false;
                 }
             }
             Vector3 axisNorm = new Vector3(axis.X,axis.Y,axis.Z);
