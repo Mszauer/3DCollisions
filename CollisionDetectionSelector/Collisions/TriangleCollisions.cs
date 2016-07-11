@@ -267,7 +267,7 @@ namespace CollisionDetectionSelector.Collisions {
             if (TestAxis(t1, t2, t1.p2.ToVector(), t1.p1.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) {
                 return false;
             }
-            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p1.ToVector(), t2.p2.ToVector())) {
+            if (TestAxis(t1, t2, t1.p0.ToVector(), t1.p2.ToVector(), t2.p0.ToVector(), t2.p2.ToVector())) {
                 return false;
             }
             //no seperating axis found, no intersection
