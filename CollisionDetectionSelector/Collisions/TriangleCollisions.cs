@@ -218,49 +218,20 @@ namespace CollisionDetectionSelector.Collisions {
 
 
         public static bool TriangleTriangleIntersection(Triangle t1,Triangle t2) {
-            //Vector3[] t1Edges = new Vector3[3] { t1.p1.ToVector() - t1.p0.ToVector(),
-            //                                     t1.p2.ToVector() - t1.p1.ToVector(),
-            //                                     t1.p0.ToVector() - t1.p2.ToVector() };
-            //
-            //Vector3[] t2Edges = new Vector3[3] {t2.p1.ToVector()-t2.p0.ToVector(),
-            //                                    t2.p2.ToVector()-t2.p1.ToVector(),
-            //                                    t2.p0.ToVector()-t2.p2.ToVector()};
             //test 11axis
-            /*
             //face normal of t1
-            Vector3 t1FaceNormal = Vector3.Cross(t1Edges[0], t1Edges[1]);
-            
-            if (TestAxis(t1, t2, t1FaceNormal)) {
-                //seperating axis found
-                return false;
-            }
-            */
             if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t1.p2.ToVector(), t1.p1.ToVector())) {
                 //seperating axis found
                 return false;
-            }            
-            /*
+            }         
+               
             //face normal of t2
-            Vector3 t2FaceNormal = Vector3.Cross(t2Edges[0], t2Edges[1]);
-            if (TestAxis(t1, t2, t2FaceNormal)) {
-                //seperating axis found
-                return false;
-            }
-            */
             if (TestAxis(t1, t2, t2.p1.ToVector(), t2.p0.ToVector(), t2.p2.ToVector(), t2.p1.ToVector())) {
                 //seperating axis found
                 return false;
             }
-            /*
+
             //cross products of each of the 3 edges
-            for (int i = 0; i < 3; i++) {
-                Vector3 testAxis = Vector3.Cross(t1Edges[i], t2Edges[i]);
-                if (TestAxis(t1, t2, testAxis)) {
-                    //seperating axis found
-                    return false;
-                }
-            }
-            */
             if (TestAxis(t1, t2, t1.p1.ToVector(), t1.p0.ToVector(), t2.p1.ToVector(), t2.p0.ToVector())) {
                 return false;
             }
@@ -290,19 +261,7 @@ namespace CollisionDetectionSelector.Collisions {
             interval.Y = System.Math.Max(interval.Y, result);
             return interval;
         }
-        
-        //private static bool TestAxis(Triangle triangle1, Triangle triangle2,Vector3 axis) {
-        //    Vector3 axisNorm = new Vector3(axis.X,axis.Y,axis.Z);
-        //    axisNorm.Normalize();
-        //    Vector2 i1 = GetInterval(triangle1, axisNorm);
-        //    Vector2 i2 = GetInterval(triangle2, axisNorm);
-        //
-        //    if (i1.Y < i2.X /*i1.max < i2.min*/ || i2.Y < i1.X /*i2.max < i1.min*/) {
-        //        //intervals overlap on given axis
-        //        return true;
-        //    }
-        //    return false;//no collision
-        //}
+
         private static bool TestAxis(Triangle triangle1, Triangle triangle2, Vector3 a,Vector3 b, Vector3 c, Vector3 d) {
             Vector3 axis = Vector3.Cross(a - b, c - d);
 
