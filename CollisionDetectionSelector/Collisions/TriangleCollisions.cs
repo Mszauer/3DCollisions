@@ -316,11 +316,16 @@ namespace CollisionDetectionSelector.Collisions {
             //find the a coordinate first
             //v = orthogonal line to BC, and passes through a
             //v = AB - projection(bc onto ab)
-            Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
+            //Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
 
 
             //a = 1- (v dot ai / v dot ab)
-            float a = 1 - (Vector3.Dot(v,) / Vector3.Dot(v, ab.ToVector()));
+            //float a = 1 - (Vector3.Dot(v,) / Vector3.Dot(v, ab.ToVector()));
+
+            if (!RaycastNoNormal(ray,new Plane(triangle.p0, triangle.p1, triangle.p2), out t)) {
+                //no collision?
+                return false;
+            }
         }
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
             float t = -1;
