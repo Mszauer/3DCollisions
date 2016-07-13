@@ -327,7 +327,10 @@ namespace CollisionDetectionSelector.Collisions {
             //a = 1- (v dot ai / v dot ab)
             Line ai = new Line(triangle.p0, i);
             float a = 1 - (Vector3.Dot(v,ai.ToVector()) / Vector3.Dot(v, ab.ToVector()));
-
+            //bounds check (0min 1 max)
+            if (0.0f > a || a > 1.0f) {
+                return false; //out of bounds
+            }
             //v = orthogonal(perpendicular) line to BC (is it AB?), and passes through triangle.p1 / B
             //v = BC - projection(bc onto ca)
             v = bc.ToVector() - Vector3.Cross(bc.ToVector(), ca.ToVector());
@@ -335,10 +338,13 @@ namespace CollisionDetectionSelector.Collisions {
             //b = 1 - (v dot bi / v dot bc)
             Line bi = new Line(triangle.p1, i);
             float b = 1 - (Vector3.Dot(v, bi.ToVector()) / Vector3.Dot(v, bc.ToVector()));
-            //early out by checking coordinates?
+            //bounds check (0min 1 max)
+            if (0.0f > b || b > 1.0f) {
+                return false; // out of bounds
+            }
 
-            //solve for c now?
-
+            //if a and b are between 0 and 1, then c will always be too
+            return true;
         }
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
             float t = -1;
