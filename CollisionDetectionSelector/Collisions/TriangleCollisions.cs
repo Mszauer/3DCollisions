@@ -346,13 +346,24 @@ namespace CollisionDetectionSelector.Collisions {
             //if a and b are between 0 and 1, then c will always be too
             return true;
         }
+        // Conveniance method, returns t without an out param
+        // If no collision happened, will return -1
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
             float t = -1;
-            //if !RaycastTriangle
-            //return -1;
-
+            if (!RaycastTriangle(ray, triangle, out t)) {
+                return -1;
+            }
             return t;
         }
+
+        // Conveniance method, returns the point of intersection
+        public static bool RaycastTriangle(Ray ray, Triangle triangle, out Point p) {
+            float t = -1;
+            bool result = RaycastTriangle(ray, triangle, out t);
+            p = new Point(ray.Position.ToVector() + ray.Normal * t);
+            return result;
+        }
+
         private static bool RaycastNoNormal(Ray ray, Plane plane, out float t) {
             float nd = Vector3.Dot(ray.Normal, plane.Normal);
             float pn = Vector3.Dot(ray.Position.ToVector(), plane.Normal);
