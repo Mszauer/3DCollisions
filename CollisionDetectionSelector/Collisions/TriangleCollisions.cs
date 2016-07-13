@@ -313,19 +313,21 @@ namespace CollisionDetectionSelector.Collisions {
             Line ab = new Line(triangle.p0, triangle.p1);
             Line bc = new Line(triangle.p1, triangle.p2);
             Line ca = new Line(triangle.p2, triangle.p0);
-            //find the a coordinate first
-            //v = orthogonal line to BC, and passes through a
-            //v = AB - projection(bc onto ab)
-            //Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
-
-
-            //a = 1- (v dot ai / v dot ab)
-            //float a = 1 - (Vector3.Dot(v,) / Vector3.Dot(v, ab.ToVector()));
 
             if (!RaycastNoNormal(ray,new Plane(triangle.p0, triangle.p1, triangle.p2), out t)) {
                 //no collision?
                 return false;
             }
+            Point i = new Point(ray.Position.ToVector() + ray.Normal * t);
+
+            //v = orthogonal line to BC, and passes through a
+            //v = AB - projection(bc onto ab)
+            Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
+
+            //a = 1- (v dot ai / v dot ab)
+            Line ai = new Line(triangle.p0, i);
+            float a = 1 - (Vector3.Dot(v,ai.ToVector()) / Vector3.Dot(v, ab.ToVector()));
+
         }
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
             float t = -1;
