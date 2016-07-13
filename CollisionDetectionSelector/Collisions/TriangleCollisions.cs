@@ -307,5 +307,25 @@ namespace CollisionDetectionSelector.Collisions {
             }
             return false;//no collision
         }
+
+        public static bool RaycastTriangle(Ray ray, Triangle triangle, out float t) {
+            //Break triangle into Vectors
+            Line ab = new Line(triangle.p0, triangle.p1);
+            Line bc = new Line(triangle.p1, triangle.p2);
+            Line ca = new Line(triangle.p2, triangle.p0);
+            //find the a coordinate first
+            //v = orthogonal line to BC, and passes through a
+            //v = AB - projection(bc onto ab)
+            Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
+            //a = 1- (v dot ai / v dot ab)
+            float a = 1 - (Vector3.Dot(v,) / Vector3.Dot(v, ab.ToVector()));
+        }
+        public static float RaycastTriangle(Ray ray, Triangle triangle) {
+            float t = -1;
+            //if !RaycastTriangle
+            //return -1;
+
+            return t;
+        }
     }
 }
