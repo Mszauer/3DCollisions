@@ -320,13 +320,20 @@ namespace CollisionDetectionSelector.Collisions {
             }
             Point i = new Point(ray.Position.ToVector() + ray.Normal * t);
 
-            //v = orthogonal line to BC, and passes through a
+            //v = orthogonal(perpendicular) line to BC, and passes through triangle.p0 / A
             //v = AB - projection(bc onto ab)
             Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
 
             //a = 1- (v dot ai / v dot ab)
             Line ai = new Line(triangle.p0, i);
             float a = 1 - (Vector3.Dot(v,ai.ToVector()) / Vector3.Dot(v, ab.ToVector()));
+
+            //v = orthogonal(perpendicular) line to BC, and passes through triangle.p0 / A
+            v = bc.ToVector() - Vector3.Cross(bc.ToVector(), ca.ToVector());
+
+            //b = 1 - (v dot bi / v dot 
+            Line bi = new Line(triangle.p1, i);
+            float b = 1 - (Vector3.Dot(v, bi.ToVector()) / Vector3.Dot(v, bc.ToVector()));
 
         }
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
