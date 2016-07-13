@@ -379,13 +379,14 @@ namespace CollisionDetectionSelector.Collisions {
             }
             return false;
         }
-        private static bool LinecastNoNormal(Line line, Plane plane, out Point result) {
+
+        public static bool LinecastTriangle(Line line, Triangle triangle, out Point result) {
             Ray r = new Ray();
             r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);
             r.Normal = line.End.ToVector() - line.Start.ToVector();
 
             float t = -1;
-            if (!RaycastNoNormal(r, plane, out t)) {
+            if (!RaycastTriangle(r, triangle, out t)) {
                 result = new Point(0f, 0f, 0f);
                 return false;
             }
@@ -399,9 +400,6 @@ namespace CollisionDetectionSelector.Collisions {
             }
             result = new Point(r.Position.ToVector() + r.Normal * t);
             return true;
-        }
-        public static bool LinecastTriangle(Line line, Triangle triangle, out Point result) {
-            return LinecastNoNormal(line, new Plane(triangle.p0, triangle.p1, triangle.p2), out result);
         }
     }
 }
