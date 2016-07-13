@@ -328,12 +328,15 @@ namespace CollisionDetectionSelector.Collisions {
             Line ai = new Line(triangle.p0, i);
             float a = 1 - (Vector3.Dot(v,ai.ToVector()) / Vector3.Dot(v, ab.ToVector()));
 
-            //v = orthogonal(perpendicular) line to BC, and passes through triangle.p0 / A
+            //v = orthogonal(perpendicular) line to BC (is it AB?), and passes through triangle.p1 / B
             v = bc.ToVector() - Vector3.Cross(bc.ToVector(), ca.ToVector());
 
             //b = 1 - (v dot bi / v dot 
             Line bi = new Line(triangle.p1, i);
             float b = 1 - (Vector3.Dot(v, bi.ToVector()) / Vector3.Dot(v, bc.ToVector()));
+            //early out by checking coordinates?
+
+            //solve for c now?
 
         }
         public static float RaycastTriangle(Ray ray, Triangle triangle) {
