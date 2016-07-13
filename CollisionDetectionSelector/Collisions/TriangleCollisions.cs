@@ -317,6 +317,8 @@ namespace CollisionDetectionSelector.Collisions {
             //v = orthogonal line to BC, and passes through a
             //v = AB - projection(bc onto ab)
             Vector3 v = ab.ToVector() - Vector3.Cross(ab.ToVector(), bc.ToVector());
+
+
             //a = 1- (v dot ai / v dot ab)
             float a = 1 - (Vector3.Dot(v,) / Vector3.Dot(v, ab.ToVector()));
         }
@@ -326,6 +328,21 @@ namespace CollisionDetectionSelector.Collisions {
             //return -1;
 
             return t;
+        }
+        private static bool RaycastNoNormal(Ray ray, Plane plane, out float t) {
+            float nd = Vector3.Dot(ray.Normal, plane.Normal);
+            float pn = Vector3.Dot(ray.Position.ToVector(), plane.Normal);
+
+            if (System.Math.Abs(0-nd) == 0.0001f) {
+                t = -1;
+                return false;
+            }
+            t = (plane.Distance - pn) / nd;
+
+            if (t >= 0f) {
+                return true;
+            }
+            return false;
         }
     }
 }
