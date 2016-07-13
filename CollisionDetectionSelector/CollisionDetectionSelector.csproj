@@ -104,6 +104,7 @@
     <Compile Include="Samples\RaycastAABB.cs" />
     <Compile Include="Samples\RaycastPlane.cs" />
     <Compile Include="Samples\RaycastSphere.cs" />
+    <Compile Include="Samples\RaycastTriangle.cs" />
     <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
     <Compile Include="Samples\SphereAABBIntersection.cs" />
