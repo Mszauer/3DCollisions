@@ -385,7 +385,7 @@ namespace CollisionDetectionSelector.Collisions {
             r.Normal = line.End.ToVector() - line.Start.ToVector();
 
             float t = -1;
-            if (!LinesAndRays.RaycastPlane(r, plane, out t)) {
+            if (!RaycastNoNormal(r, plane, out t)) {
                 result = new Point(0f, 0f, 0f);
                 return false;
             }
