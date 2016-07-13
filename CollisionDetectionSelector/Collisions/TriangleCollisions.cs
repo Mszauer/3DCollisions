@@ -331,7 +331,7 @@ namespace CollisionDetectionSelector.Collisions {
             if (0.0f > a || a > 1.0f) {
                 return false; //out of bounds
             }
-            //v = orthogonal(perpendicular) line to BC (is it AB?), and passes through triangle.p1 / B
+            //v = orthogonal(perpendicular) line to CA, and passes through triangle.p1 / B
             //v = BC - projection(bc onto ca)
             v = bc.ToVector() - Vector3.Cross(bc.ToVector(), ca.ToVector());
 
