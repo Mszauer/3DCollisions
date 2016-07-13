@@ -329,9 +329,10 @@ namespace CollisionDetectionSelector.Collisions {
             float a = 1 - (Vector3.Dot(v,ai.ToVector()) / Vector3.Dot(v, ab.ToVector()));
 
             //v = orthogonal(perpendicular) line to BC (is it AB?), and passes through triangle.p1 / B
+            //v = BC - projection(bc onto ca)
             v = bc.ToVector() - Vector3.Cross(bc.ToVector(), ca.ToVector());
 
-            //b = 1 - (v dot bi / v dot 
+            //b = 1 - (v dot bi / v dot bc)
             Line bi = new Line(triangle.p1, i);
             float b = 1 - (Vector3.Dot(v, bi.ToVector()) / Vector3.Dot(v, bc.ToVector()));
             //early out by checking coordinates?
