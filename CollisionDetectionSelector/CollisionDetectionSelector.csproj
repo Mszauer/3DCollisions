@@ -72,6 +72,7 @@
     <Compile Include="OBJLoader.cs" />
     <Compile Include="Primitive\AABB.cs" />
     <Compile Include="Primitive\Line.cs" />
+    <Compile Include="Primitive\LinetestTriangle.cs" />
     <Compile Include="Primitive\Plane.cs" />
     <Compile Include="Primitive\Point.cs" />
     <Compile Include="Primitive\Ray.cs" />
