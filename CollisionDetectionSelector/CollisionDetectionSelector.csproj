@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Collisions.cs" />
     <Compile Include="Collisions\AABBCollisions.cs" />
     <Compile Include="Collisions\LineCollisions.cs" />
     <Compile Include="Collisions\PlaneCollision.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Primitive\AABB.cs" />
     <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\LinetestTriangle.cs" />
+    <Compile Include="Primitive\OBJ.cs" />
     <Compile Include="Primitive\Plane.cs" />
     <Compile Include="Primitive\Point.cs" />
     <Compile Include="Primitive\Ray.cs" />
@@ -94,9 +96,11 @@
     <Compile Include="Samples\LinecastPlane.cs" />
     <Compile Include="Samples\LinecastSphere.cs" />
     <Compile Include="Samples\LineSample.cs" />
+    <Compile Include="Samples\OBJClassSample.cs" />
     <Compile Include="Samples\OBJDebugTriangles.cs" />
     <Compile Include="Samples\OBJDebugTrianglesAABB.cs" />
     <Compile Include="Samples\OBJSample.cs" />
+    <Compile Include="Samples\OBJSphereIntersection.cs" />
     <Compile Include="Samples\OBJTrianglesSphere.cs" />
     <Compile Include="Samples\PlanePlaneIntersection.cs" />
     <Compile Include="Samples\PlaneSample.cs" />

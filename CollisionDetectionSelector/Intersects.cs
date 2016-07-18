@@ -84,4 +84,32 @@ class Intersects {
         //if lengthsq = 0, planes are parallel or coincident
         return (Vector3.Dot(dir, dir) > 0.00001f);
     }
+    public static bool OBJSphereIntersect(Sphere sphere,OBJ model) {
+        Matrix4 inverseWorldMatrix = Matrix4.Inverse(model.WorldMatrix);//how to find world matrix?
+
+        Vector3 newSpherePos = Matrix4.MultiplyPoint(inverseWorldMatrix, sphere.Position.ToVector());
+        // We have to scale the radius of the sphere! This is difficult. The new scalar is the old radius
+        // multiplied by the largest scale component of the matrix
+        float newSphereRad = sphere.Radius * System.Math.Abs(System.Math.Max(
+                   System.Math.Max(System.Math.Abs(inverseWorldMatrix[0, 0]), System.Math.Abs(inverseWorldMatrix[1, 1])),
+                   System.Math.Abs(inverseWorldMatrix[2, 2])));
+        //make new sphere because old is a reference and we dont want to alter it
+        Sphere translatedSphere = new Sphere(newSpherePos, newSphereRad);
+
+        //broad phase collision
+        if (!SphereAABBIntersect(model.BoundingBox, translatedSphere)) {
+            return false;
+        }
+        //narrow phase
+        for (int i = 0; i < model.Mesh.Length; i++) {
+            if (CollisionDetectionSelector.Collisions.TriangleCollisions.SphereIntersect(translatedSphere, model.Mesh[i])) {//i dont have mesh...????
+                return true;
+            }
+        }
+        //no triangles intersected in narrow phase
+        return false;
+    }
+    public static bool OBJSphereIntersect(OBJ model, Sphere sphere) {
+        return OBJSphereIntersect(sphere, model);
+    }
 }

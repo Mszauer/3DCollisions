@@ -37,6 +37,11 @@ class OBJLoader {
     protected AABB containerAABB = null;
     protected Sphere containerSphere = null;
 
+    public Triangle[] CollisionMesh {
+        get {
+            return collisionMesh;
+        }
+    }
     public OBJLoader(string path) {
         List<float> vertices = new List<float>();
         List<float> normals = new List<float>();
