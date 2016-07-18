@@ -25,7 +25,7 @@ namespace CollisionDetectionSelector.Samples {
             bool[] results = new bool[] { false, false, false, true, true, false };
             Point result = new Point();
             for (int i = 0; i < results.Length; ++i) {
-                if (Collisions.TriangleCollisions.LinecastTriangle(lines[i], triangle, out result) != results[i]) {
+                if (Collisions.LinecastTriangle(lines[i], triangle, out result) != results[i]) {
                     LogError("Line at index " + i + " was " +
                         (results[i] ? "expected" : "not expected") +
                         "to intersect the test triangle");
@@ -39,7 +39,7 @@ namespace CollisionDetectionSelector.Samples {
 
             Point result = new Point();
             foreach (Line line in lines) {
-                if (Collisions.TriangleCollisions.LinecastTriangle(line, triangle, out result)) {
+                if (Collisions.LinecastTriangle(line, triangle, out result)) {
                     GL.Color3(1f, 0f, 1f);
                     result.Render();
                     GL.Color3(0f, 2f, 0f);

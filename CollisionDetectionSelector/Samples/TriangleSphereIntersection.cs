@@ -21,7 +21,7 @@ namespace CollisionDetectionSelector.Samples {
 
             bool[] expected = new bool[] { true, true, false, false };
             for (int i = 0; i < spheres.Length; ++i) {
-                bool result = Collisions.TriangleCollisions.SphereIntersect(triangle, spheres[i]);
+                bool result = Collisions.SphereIntersect(triangle, spheres[i]);
                 if (result != expected[i]) {
                     LogError("Expected sphere " + i + " to " +
                         (expected[i] ? " intersect" : " NOT intersect") +
@@ -38,7 +38,7 @@ namespace CollisionDetectionSelector.Samples {
             triangle.Render();
 
             foreach (Sphere sphere in spheres) {
-                if (Collisions.TriangleCollisions.SphereIntersect(triangle, sphere)) {
+                if (Collisions.SphereIntersect(triangle, sphere)) {
                     GL.Color3(0f, 1f, 0f);
                 }
                 else {

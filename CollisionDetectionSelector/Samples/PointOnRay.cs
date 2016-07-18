@@ -32,14 +32,14 @@ namespace CollisionDetectionSelector.Samples {
             LogError("Points equal: " + (p1 == p2));   
              
             for (int i = 0; i < 3; ++i) {
-                if (!Collisions.RayCollisions.PointOnRay(testPoints[i], testRay)) {
+                if (!Collisions.PointOnRay(testPoints[i], testRay)) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;
                     System.Console.WriteLine("Expected point: " + testPoints[i].ToString() + " to be on Ray!");
                 }
             }
 
             for (int i = 3; i < testPoints.Length; ++i) {
-                if (Collisions.RayCollisions.PointOnRay(testPoints[i], testRay)) {
+                if (Collisions.PointOnRay(testPoints[i], testRay)) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;
                     System.Console.WriteLine("Expected point: " + testPoints[i].ToString() + " to NOT be on Ray!");
                 }
@@ -59,7 +59,7 @@ namespace CollisionDetectionSelector.Samples {
             testRay.Render();
 
             foreach (Point point in testPoints) {
-                if (Collisions.RayCollisions.PointOnRay(point, testRay)) {
+                if (Collisions.PointOnRay(point, testRay)) {
                     GL.Color3(1f, 0f, 0f);
                 }
                 else {

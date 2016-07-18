@@ -27,7 +27,7 @@ namespace CollisionDetectionSelector.Samples {
 
             bool[] results = new bool[] { true, true, true, true, false, false, false };
             for (int i = 0; i < testPoints.Length; ++i) {
-                bool collision = Collisions.SphereCollisions.PointInSphere(testSphere, testPoints[i]);
+                bool collision = Collisions.PointInSphere(testSphere, testPoints[i]);
                 if (collision != results[i]) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;
                 }
@@ -42,7 +42,7 @@ namespace CollisionDetectionSelector.Samples {
             }
 
             Vector3 expected = new Vector3(0.719944f, 0.719944f, 1.960392f);
-            Point closest = Collisions.SphereCollisions.ClosestPoint(testSphere, farPoint);
+            Point closest = Collisions.ClosestPoint(testSphere, farPoint);
             if (expected != closest.ToVector()) {
                 System.Console.ForegroundColor = System.ConsoleColor.Red;
             }
@@ -68,7 +68,7 @@ namespace CollisionDetectionSelector.Samples {
             testSphere.Render();
 
             foreach (Point point in testPoints) {
-                if (Collisions.SphereCollisions.PointInSphere(testSphere, point)) {
+                if (Collisions.PointInSphere(testSphere, point)) {
                     GL.Color3(1f, 0f, 0f);
                 }
                 else {
@@ -80,7 +80,7 @@ namespace CollisionDetectionSelector.Samples {
             GL.Color3(0f, 0f, 1f);
             farPoint.Render();
 
-            Point closest = Collisions.SphereCollisions.ClosestPoint(testSphere, farPoint);
+            Point closest = Collisions.ClosestPoint(testSphere, farPoint);
             GL.Color3(1f, 0f, 1f);
             GL.Begin(PrimitiveType.Lines);
             GL.Vertex3(testSphere.Position.X, testSphere.Position.Y, testSphere.Position.Z);

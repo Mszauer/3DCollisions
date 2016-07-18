@@ -31,7 +31,7 @@ namespace CollisionDetectionSelector.Samples {
 
             float t;
             for (int i = 0; i < results.Length; ++i) {
-                if (Collisions.TriangleCollisions.RaycastTriangle(rays[i], test, out t) != results[i]) {
+                if (Collisions.RaycastTriangle(rays[i], test, out t) != results[i]) {
                     LogError("Expected ray at index: " + i + " to " +
                         (results[i] ? "intersect" : "not intersect") +
                         " the triangle");
@@ -49,9 +49,9 @@ namespace CollisionDetectionSelector.Samples {
 
             float t;
             foreach (Ray ray in rays) {
-                if (Collisions.TriangleCollisions.RaycastTriangle(ray, test, out t)) {
+                if (Collisions.RaycastTriangle(ray, test, out t)) {
                     Point colPoint = new Point();
-                    Collisions.TriangleCollisions.RaycastTriangle(ray, test, out colPoint);
+                    Collisions.RaycastTriangle(ray, test, out colPoint);
                     GL.Color3(0f, 1f, 0f);
                     colPoint.Render();
                     GL.Color3(1f, 0f, 0f);

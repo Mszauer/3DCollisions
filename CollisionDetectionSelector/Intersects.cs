@@ -19,7 +19,7 @@ class Intersects {
     }
     public static bool SphereAABBIntersect(Sphere sphere,AABB aabb) {
         //find closest point
-        Vector3 closestPoint = CollisionDetectionSelector.Collisions.AABBCollisions.ClosestPoint(aabb, sphere.Position).ToVector();
+        Vector3 closestPoint = Collisions.ClosestPoint(aabb, sphere.Position).ToVector();
         Vector3 differenceVec = sphere.Position.ToVector() - closestPoint;
 
         float distSq = Vector3.LengthSquared(differenceVec);
@@ -31,7 +31,7 @@ class Intersects {
         return SphereAABBIntersect(sphere, aabb);
     }
     public static bool SpherePlaneIntersect(Sphere sphere, Plane plane) {
-        Point closest = CollisionDetectionSelector.Collisions.PlaneCollision.ClosestPoint(plane, sphere.Position);
+        Point closest = Collisions.ClosestPoint(plane, sphere.Position);
 
         Vector3 closestPoint = closest.ToVector();
 
@@ -85,7 +85,7 @@ class Intersects {
         return (Vector3.Dot(dir, dir) > 0.00001f);
     }
     public static bool OBJSphereIntersect(Sphere sphere,OBJ model) {
-        Matrix4 inverseWorldMatrix = Matrix4.Inverse(model.WorldMatrix);//how to find world matrix?
+        Matrix4 inverseWorldMatrix = Matrix4.Inverse(model.WorldMatrix);
 
         Vector3 newSpherePos = Matrix4.MultiplyPoint(inverseWorldMatrix, sphere.Position.ToVector());
         // We have to scale the radius of the sphere! This is difficult. The new scalar is the old radius
@@ -102,7 +102,7 @@ class Intersects {
         }
         //narrow phase
         for (int i = 0; i < model.Mesh.Length; i++) {
-            if (CollisionDetectionSelector.Collisions.TriangleCollisions.SphereIntersect(translatedSphere, model.Mesh[i])) {//i dont have mesh...????
+            if (Collisions.SphereIntersect(translatedSphere, model.Mesh[i])) {
                 return true;
             }
         }

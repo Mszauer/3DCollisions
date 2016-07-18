@@ -19,7 +19,7 @@ namespace CollisionDetectionSelector.Samples {
 
             bool[] expected = new bool[] { false, true, false, true };
             for (int i = 0; i < triangles.Length; ++i) {
-                bool result = Collisions.TriangleCollisions.PlaneTriangleIntersection(plane, triangles[i]);
+                bool result = Collisions.PlaneTriangleIntersection(plane, triangles[i]);
                 if (result != expected[i]) {
                     LogError("Expected triangle " + i + " to " +
                         (expected[i] ? " intersect" : " NOT intersect") +
@@ -36,7 +36,7 @@ namespace CollisionDetectionSelector.Samples {
             plane.Render(4);
 
             foreach (Triangle triangle in triangles) {
-                if (Collisions.TriangleCollisions.PlaneTriangleIntersection(triangle, plane)) {
+                if (Collisions.PlaneTriangleIntersection(triangle, plane)) {
                     GL.Color3(0f, 1f, 0f);
                 }
                 else {

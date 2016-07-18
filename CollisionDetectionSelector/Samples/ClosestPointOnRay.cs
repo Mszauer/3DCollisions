@@ -52,13 +52,13 @@ namespace CollisionDetectionSelector.Samples {
 
             GL.Color3(1f, 1f, 0f);
             foreach (Point point in testPoints) {
-                Point closest = Collisions.RayCollisions.ClosestPoint(testRay, point);
+                Point closest = Collisions.ClosestPoint(testRay, point);
                 closest.Render();
             }
 
             GL.Color3(1f, 1f, 1f);
             foreach (Point point in testPoints) {
-                Point closest = Collisions.RayCollisions.ClosestPoint(testRay, point);
+                Point closest = Collisions.ClosestPoint(testRay, point);
                 Line newLine = new Line(closest, point);
                 newLine.Render();
             }

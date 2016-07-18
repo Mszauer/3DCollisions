@@ -29,8 +29,8 @@ namespace CollisionDetectionSelector.Samples {
             GL.Color3(1f, 1f, 1f);
             plane.Render(4f);
 
-            Point closest = Collisions.PlaneCollision.ClosestPoint(plane, point);
-            float distance = Collisions.PlaneCollision.DistanceFromPlane(point, plane);
+            Point closest = Collisions.ClosestPoint(plane, point);
+            float distance = Collisions.DistanceFromPlane(point, plane);
             Vector3 vec = point.ToVector() - plane.Normal * distance;
 
             GL.Color3(0f, 0f, 1f);

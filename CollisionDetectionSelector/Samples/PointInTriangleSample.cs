@@ -51,14 +51,14 @@ namespace CollisionDetectionSelector.Samples {
 
             for (int i = 0; i < points.Length; ++i) {
                 if (col_index < colliding.Length && i == colliding[col_index]) {
-                    if (!Collisions.TriangleCollisions.PointInTriangle(triangle, points[i])) {
+                    if (!Collisions.PointInTriangle(triangle, points[i])) {
                         LogError("point " + i + " SHOULD be colliding!");
                     }
 
                     col_index++;
                 }
                 else {
-                    if (Collisions.TriangleCollisions.PointInTriangle(triangle, points[i])) {
+                    if (Collisions.PointInTriangle(triangle, points[i])) {
                         LogError("point " + i + " should NOT be colliding!");
                     }
                 }
@@ -73,7 +73,7 @@ namespace CollisionDetectionSelector.Samples {
             triangle.Render();
 
             foreach (Point point in points) {
-                if (Collisions.TriangleCollisions.PointInTriangle(triangle, point)) {
+                if (Collisions.PointInTriangle(triangle, point)) {
                     GL.Color3(0.0f, 1.0f, 0.0f);
                 }
                 else {

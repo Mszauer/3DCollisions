@@ -41,7 +41,7 @@ namespace CollisionDetectionSelector.Samples {
             test.Render();
 
             foreach (Triangle triangle in triangles) {
-                if (Collisions.TriangleCollisions.TriangleTriangleIntersection(triangle, test)) {
+                if (Collisions.TriangleTriangleIntersection(triangle, test)) {
                     GL.Color3(0f, 1f, 0f);
                 }
                 else {

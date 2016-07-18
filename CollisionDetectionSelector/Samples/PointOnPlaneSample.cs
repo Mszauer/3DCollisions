@@ -41,11 +41,11 @@ namespace CollisionDetectionSelector.Samples {
 
             for (int i = 0; i < points.Length; ++i) {
                 Point point = points[i];
-                if (Collisions.PlaneCollision.PointOnPlane(point, plane)) {
+                if (Collisions.PointOnPlane(point, plane)) {
                     result[i] = 0;
                 }
                 else {
-                    if (Collisions.PlaneCollision.DistanceFromPlane(point, plane) < 0f) {
+                    if (Collisions.DistanceFromPlane(point, plane) < 0f) {
                         result[i] = -1;
                     }
                     else {
@@ -103,11 +103,11 @@ namespace CollisionDetectionSelector.Samples {
             plane.Render(7f);
 
             foreach (Point point in points) {
-                if (Collisions.PlaneCollision.PointOnPlane(point, plane)) {
+                if (Collisions.PointOnPlane(point, plane)) {
                     GL.Color3(0f, 1f, 0f);
                 }
                 else {
-                    if (Collisions.PlaneCollision.DistanceFromPlane(point, plane) < 0f) {
+                    if (Collisions.DistanceFromPlane(point, plane) < 0f) {
                         GL.Color3(1f, 0f, 0f);
                     }
                     else {

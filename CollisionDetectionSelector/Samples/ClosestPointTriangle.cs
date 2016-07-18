@@ -28,7 +28,7 @@ namespace CollisionDetectionSelector.Samples {
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
 
             for (int i = 0; i < points.Length; ++i) {
-                Point c = Collisions.TriangleCollisions.ClosestPointTriangle(triangle, points[i]);
+                Point c = Collisions.ClosestPointTriangle(triangle, points[i]);
                 if (!PointCompare(c, tests[i])) {
                     LogError("Expected point " + i + " to be: " + tests[i] + ", got: " + c);
                 }
@@ -58,7 +58,7 @@ namespace CollisionDetectionSelector.Samples {
             GL.Color3(1.0f, 0.0f, 0.0f);
             GL.Begin(PrimitiveType.Lines);
             for (int i = 0; i < points.Length; ++i) {
-                Point closest = Collisions.TriangleCollisions.ClosestPointTriangle(triangle, points[i]);
+                Point closest = Collisions.ClosestPointTriangle(triangle, points[i]);
                 GL.Vertex3(points[i].X, points[i].Y, points[i].Z);
                 GL.Vertex3(closest.X, closest.Y, closest.Z);
             }

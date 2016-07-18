@@ -27,14 +27,14 @@ namespace CollisionDetectionSelector.Samples {
             GL.PointSize(4f);
 
             for (int i = 0; i < 3; ++i) {
-                if (!Collisions.LineCollisions.PointOnLine(testPoints[i], testLine)) {
+                if (!Collisions.PointOnLine(testPoints[i], testLine)) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;
                     System.Console.WriteLine("Expected point: " + testPoints[i].ToString() + " to be on Line!");
                 }
             }
 
             for (int i = 3; i < testPoints.Length; ++i) {
-                if (Collisions.LineCollisions.PointOnLine(testPoints[i], testLine)) {
+                if (Collisions.PointOnLine(testPoints[i], testLine)) {
                     System.Console.ForegroundColor = System.ConsoleColor.Red;
                     System.Console.WriteLine("Expected point: " + testPoints[i].ToString() + " to be on Line!");
                 }
@@ -54,7 +54,7 @@ namespace CollisionDetectionSelector.Samples {
             testLine.Render();
 
             foreach (Point point in testPoints) {
-                if (Collisions.LineCollisions.PointOnLine(point, testLine)) {
+                if (Collisions.PointOnLine(point, testLine)) {
                     GL.Color3(1f, 0f, 0f);
                 }
                 else {
