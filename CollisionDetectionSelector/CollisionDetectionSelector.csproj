@@ -90,9 +90,11 @@
     <Compile Include="Samples\LinecastPlane.cs" />
     <Compile Include="Samples\LinecastSphere.cs" />
     <Compile Include="Samples\LineSample.cs" />
+    <Compile Include="Samples\OBJAABBIntersection.cs" />
     <Compile Include="Samples\OBJClassSample.cs" />
     <Compile Include="Samples\OBJDebugTriangles.cs" />
     <Compile Include="Samples\OBJDebugTrianglesAABB.cs" />
+    <Compile Include="Samples\OBJPlaneIntersection.cs" />
     <Compile Include="Samples\OBJSample.cs" />
     <Compile Include="Samples\OBJSphereIntersection.cs" />
     <Compile Include="Samples\OBJTrianglesSphere.cs" />

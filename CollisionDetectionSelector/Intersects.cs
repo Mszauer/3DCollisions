@@ -1,9 +1,12 @@
-﻿using Math_Implementation;
+﻿#define USE_AABB_MINMAX
+
+using Math_Implementation;
 using OpenTK.Graphics.OpenGL;
 using CollisionDetectionSelector.Primitive;
 
 
 class Intersects {
+    #region Sphere
     public static bool SphereSphereIntersect(Sphere a, Sphere b) {
         //find squared distance
         Vector3 d = new Vector3(a.Position.X - b.Position.X,
@@ -47,6 +50,8 @@ class Intersects {
     public static bool SpherePlaneIntersect(Plane plane, Sphere sphere) {
         return SpherePlaneIntersect(sphere, plane);
     }
+    #endregion
+    #region AABB
     public static bool AABBAABBIntersect(AABB a,AABB b) {
         return
             (a.Min.X <= b.Max.X && a.Max.X >= b.Min.X) &&
@@ -78,12 +83,16 @@ class Intersects {
     public static bool AABBPlaneIntersect(Plane p,AABB aabb) {
         return AABBPlaneIntersect(aabb, p);
     }
+    #endregion
+    #region Plane
     public static bool PlanePlaneIntersect(Plane p1, Plane p2) {
         //find direction of intersection
         Vector3 dir = Vector3.Cross(p1.Normal, p2.Normal);
         //if lengthsq = 0, planes are parallel or coincident
         return (Vector3.Dot(dir, dir) > 0.00001f);
     }
+    #endregion
+    #region OBJ
     public static bool OBJSphereIntersect(Sphere sphere,OBJ model) {
         Matrix4 inverseWorldMatrix = Matrix4.Inverse(model.WorldMatrix);
 
@@ -112,4 +121,64 @@ class Intersects {
     public static bool OBJSphereIntersect(OBJ model, Sphere sphere) {
         return OBJSphereIntersect(sphere, model);
     }
+
+
+    public static bool OBJAABBIntersect(OBJ model, AABB aabb) {
+        //find inverse of world matrix of model
+        Matrix4 inverseWorldMatrix = Matrix4.Inverse(model.WorldMatrix);
+        //construct new aabb that is translated by inverse matrix
+#if USE_AABB_MINMAX
+        Vector3 newAABBMin = Matrix4.MultiplyPoint(inverseWorldMatrix, aabb.Min.ToVector());
+        Vector3 newAABBMax = Matrix4.MultiplyPoint(inverseWorldMatrix, aabb.Max.ToVector());
+        AABB newAABB = new AABB(new Point(newAABBMin), new Point(newAABBMax));
+#else
+        Vector3 newAABBCenter = Matrix4.MultiplyPoint(inverseWorldMatrix, aabb.Center.ToVector());
+        Vector3 newAABBExtents = Matrix4.MultiplyVector(inverseWorldMatrix, aabb.Extents);
+        AABB newAABB = new AABB(new Point(newAABBCenter),newAABBExtents);
+#endif
+
+        //aabb bounding box collision
+        if (!AABBAABBIntersect(model.BoundingBox, newAABB)) {
+            return false;
+        }
+        //aabb bounding sphere collision
+        if (!SphereAABBIntersect(newAABB, model.BoundingSphere)) {
+            return false;
+        }
+        //aabb mesh triangles  collision
+        foreach (Triangle triangle in model.Mesh) {
+            if (Collisions.AABBIntersect(newAABB, triangle)) {
+                return true;
+            }
+        }
+        //by deafult no collision
+        return false;
+    }
+    public static bool OBJAABBIntersect(AABB aabb, OBJ model) {
+        return OBJAABBIntersect(model, aabb);
+    }
+    public static bool OBJPlaneIntersect(OBJ model, Plane plane) {
+        Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
+        Vector3 newPlaneNorm = Matrix4.MultiplyVector(inverseWorld, plane.Normal);
+        Plane newPlane = new Plane(newPlaneNorm, plane.Distance);
+        //plane bounding box
+        if (!AABBPlaneIntersect(model.BoundingBox, newPlane)) {
+            return false;
+        }
+        //plane bounding sphere
+        if (!SpherePlaneIntersect(newPlane, model.BoundingSphere)) {
+            return false;
+        }
+        //plane triangle
+        foreach(Triangle triangle in model.Mesh) {
+            if (Collisions.PlaneTriangleIntersection(newPlane, triangle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static bool OBJPlaneIntersect(Plane plane, OBJ obj) {
+        return OBJPlaneIntersect(obj, plane);
+    }
+#endregion
 }
