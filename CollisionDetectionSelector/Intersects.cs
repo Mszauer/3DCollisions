@@ -209,5 +209,29 @@ class Intersects {
     public static bool OBJTriangleIntersect(OBJ model,Triangle triangle) {
         return OBJTriangleIntersect(triangle, model);
     }
+    public static bool OBJRayIntersect(OBJ model, Ray ray) {
+        Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
+        Vector3 newRayPos = Matrix4.MultiplyVector(inverseWorld, ray.Position.ToVector());
+        Vector3 newRayNorm = Matrix4.MultiplyVector(inverseWorld, ray.Normal);
+        Ray newRay = new Ray(newRayPos, newRayNorm);
+        float t;
+        //ray boundingbox
+        if (!LinesAndRays.RaycastAABB(newRay, model.BoundingBox,out t)) {
+            return false;
+        }
+        //ray boundingSphere
+        if(!LinesAndRays.RaycastSphere(newRay,model.BoundingSphere,out t)) {
+            return false;
+        }
+        foreach(Triangle triangle in model.Mesh) {
+            if(LinesAndRays.RaycastPlane(newRay,new Plane(triangle.p0, triangle.p1, triangle.p2),out t)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static bool OBJRayIntersect(Ray ray, OBJ model) {
+        return OBJRayIntersect(model, ray);
+    }
 #endregion
 }
