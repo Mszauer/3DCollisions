@@ -182,9 +182,9 @@ class Intersects {
     }
     public static bool OBJTriangleIntersect(Triangle triangle, OBJ model) {
         Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
-        Vector3 newTrianglep0 = Matrix4.MultiplyVector(inverseWorld, triangle.p0.ToVector());
-        Vector3 newTrianglep1 = Matrix4.MultiplyVector(inverseWorld, triangle.p1.ToVector());
-        Vector3 newTrianglep2 = Matrix4.MultiplyVector(inverseWorld, triangle.p2.ToVector());
+        Vector3 newTrianglep0 = Matrix4.MultiplyPoint(inverseWorld, triangle.p0.ToVector());
+        Vector3 newTrianglep1 = Matrix4.MultiplyPoint(inverseWorld, triangle.p1.ToVector());
+        Vector3 newTrianglep2 = Matrix4.MultiplyPoint(inverseWorld, triangle.p2.ToVector());
         Triangle newTriangle = new Triangle(newTrianglep0, newTrianglep1, newTrianglep2);
 
         //triangle boundbox
@@ -209,12 +209,11 @@ class Intersects {
     public static bool OBJTriangleIntersect(OBJ model,Triangle triangle) {
         return OBJTriangleIntersect(triangle, model);
     }
-    public static bool OBJRayIntersect(OBJ model, Ray ray) {
+    public static bool OBJRayIntersect(OBJ model, Ray ray,out float t) {
         Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
-        Vector3 newRayPos = Matrix4.MultiplyVector(inverseWorld, ray.Position.ToVector());
+        Vector3 newRayPos = Matrix4.MultiplyPoint(inverseWorld, ray.Position.ToVector());
         Vector3 newRayNorm = Matrix4.MultiplyVector(inverseWorld, ray.Normal);
         Ray newRay = new Ray(newRayPos, newRayNorm);
-        float t;
         //ray boundingbox
         if (!LinesAndRays.RaycastAABB(newRay, model.BoundingBox,out t)) {
             return false;
@@ -224,14 +223,14 @@ class Intersects {
             return false;
         }
         foreach(Triangle triangle in model.Mesh) {
-            if(LinesAndRays.RaycastPlane(newRay,new Plane(triangle.p0, triangle.p1, triangle.p2),out t)){
+            if(Collisions.RaycastTriangle(newRay,triangle, out t)){
                 return true;
             }
         }
         return false;
     }
-    public static bool OBJRayIntersect(Ray ray, OBJ model) {
-        return OBJRayIntersect(model, ray);
+    public static bool OBJRayIntersect(Ray ray, OBJ model,out float t) {
+        return OBJRayIntersect(model, ray,out t);
     }
 #endregion
 }
