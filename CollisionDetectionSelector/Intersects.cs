@@ -147,7 +147,7 @@ class Intersects {
         }
         //aabb mesh triangles  collision
         foreach (Triangle triangle in model.Mesh) {
-            if (Collisions.AABBIntersect(newAABB, triangle)) {
+            if (Collisions.TriangleAABBIntersect(newAABB, triangle)) {
                 return true;
             }
         }
@@ -179,6 +179,35 @@ class Intersects {
     }
     public static bool OBJPlaneIntersect(Plane plane, OBJ obj) {
         return OBJPlaneIntersect(obj, plane);
+    }
+    public static bool OBJTriangleIntersect(Triangle triangle, OBJ model) {
+        Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
+        Vector3 newTrianglep0 = Matrix4.MultiplyVector(inverseWorld, triangle.p0.ToVector());
+        Vector3 newTrianglep1 = Matrix4.MultiplyVector(inverseWorld, triangle.p1.ToVector());
+        Vector3 newTrianglep2 = Matrix4.MultiplyVector(inverseWorld, triangle.p2.ToVector());
+        Triangle newTriangle = new Triangle(newTrianglep0, newTrianglep1, newTrianglep2);
+
+        //triangle boundbox
+        if (!Collisions.TriangleAABBIntersect(triangle, model.BoundingBox)) {
+            return false;
+        }
+        //triangle sphere
+        if (!Collisions.SphereIntersect(model.BoundingSphere, triangle)) {
+            return false;
+        }
+
+        //triangle triangle
+        foreach(Triangle t in model.Mesh) {
+            if (Collisions.TriangleTriangleIntersection(t, triangle)) {
+                return true;
+            }
+        }
+
+        //passed all collisions
+        return false;
+    }
+    public static bool OBJTriangleIntersect(OBJ model,Triangle triangle) {
+        return OBJTriangleIntersect(triangle, model);
     }
 #endregion
 }

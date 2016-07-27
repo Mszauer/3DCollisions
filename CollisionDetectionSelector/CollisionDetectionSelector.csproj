@@ -97,6 +97,7 @@
     <Compile Include="Samples\OBJPlaneIntersection.cs" />
     <Compile Include="Samples\OBJSample.cs" />
     <Compile Include="Samples\OBJSphereIntersection.cs" />
+    <Compile Include="Samples\OBJTriangleIntersection.cs" />
     <Compile Include="Samples\OBJTrianglesSphere.cs" />
     <Compile Include="Samples\PlanePlaneIntersection.cs" />
     <Compile Include="Samples\PlaneSample.cs" />

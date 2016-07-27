@@ -305,7 +305,7 @@ class Collisions {
         return SphereIntersect(triangle, sphere);
     }
 
-    public static bool AABBIntersect(Triangle triangle, AABB aabb) {
+    public static bool TriangleAABBIntersect(Triangle triangle, AABB aabb) {
         //get triangle corners as vectors
         Vector3[] v = new Vector3[3] { triangle.p0.ToVector(),
                                         triangle.p1.ToVector(),
@@ -359,8 +359,8 @@ class Collisions {
         // Passed testing for all 13 seperating axis that exist!
         return true;
     }
-    public static bool AABBIntersect(AABB aabb, Triangle triangle) {
-        return AABBIntersect(triangle, aabb);
+    public static bool TriangleAABBIntersect(AABB aabb, Triangle triangle) {
+        return TriangleAABBIntersect(triangle, aabb);
     }
     private static bool TriangleAABBSat(Vector3[] v, Vector3[] u, Vector3 extents, Vector3 testingAxii) {
         // Project all 3 vertices of the triangle onto the Seperating axis

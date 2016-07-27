@@ -25,7 +25,7 @@ namespace CollisionDetectionSelector.Samples {
 
             bool[] expected = new bool[] { true, true, true, true, false, false };
             for (int i = 0; i < aabbs.Length; ++i) {
-                bool result = Collisions.AABBIntersect(triangle, aabbs[i]);
+                bool result = Collisions.TriangleAABBIntersect(triangle, aabbs[i]);
                 if (result != expected[i]) {
                     LogError("Expected aabb " + i + " to " +
                         (expected[i] ? " intersect" : " NOT intersect") +
@@ -42,7 +42,7 @@ namespace CollisionDetectionSelector.Samples {
             triangle.Render();
 
             foreach (AABB aabb in aabbs) {
-                if (Collisions.AABBIntersect(triangle, aabb)) {
+                if (Collisions.TriangleAABBIntersect(triangle, aabb)) {
                     GL.Color3(0f, 1f, 0f);
                 }
                 else {
