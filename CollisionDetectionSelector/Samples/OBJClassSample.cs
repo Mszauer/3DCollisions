@@ -40,8 +40,10 @@ namespace CollisionDetectionSelector.Samples {
             base.Render();
             DrawOrigin();
 
+
             foreach (OBJ obj in objs) {
                 obj.DebugRender();
+
             }
         }
     }

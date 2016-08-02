@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="BVH.cs" />
     <Compile Include="Collisions.cs" />
     <Compile Include="Intersects.cs" />
     <Compile Include="LinesAndRays.cs" />

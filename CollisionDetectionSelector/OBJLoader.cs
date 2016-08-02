@@ -6,6 +6,28 @@ using CollisionDetectionSelector.Primitive;
 using Math_Implementation;
 
 class OBJLoader {
+    #region BVH
+    protected BVHNode bvhRoot = null;
+    public BVHNode BvhRoot {
+        get {
+            return bvhRoot;
+        }
+    }
+    //non-recursive public api
+    public void RenderBVH() {
+        RenderBVH(bvhRoot);
+    }
+    //recursive private API
+    private void RenderBVH(BVHNode node) {
+        node.AABB.Render();
+        if(node.Children!= null) {
+            foreach(BVHNode child in node.Children) {
+                RenderBVH(child);
+            }
+        }
+    }
+    
+    #endregion
     public int NumCollisionTriangles {
         get {
             return collisionMesh.Length;
@@ -126,23 +148,6 @@ class OBJLoader {
             uvData.Add(texCoord[(int)uvIndex[i] * 2 + 0]);
             uvData.Add(texCoord[(int)uvIndex[i] * 2 + 1]);
         }
-        //Create wireframe model and triangles
-        collisionMesh = new Triangle[vertexData.Count / 9];
-
-        for (int i = 0; i < vertexData.Count ; i += 9) {
-            Point p0, p1, p2;
-
-            p0 = new Point(vertexData[i], vertexData[i + 1], vertexData[i + 2]);
-
-            int j = i + 3;
-            p1 = new Point(vertexData[j], vertexData[j + 1], vertexData[j + 2]);
-
-            int k = j + 3;
-            p2 = new Point(vertexData[k], vertexData[k + 1], vertexData[k + 2]);
-
-            collisionMesh[i/9] = new Triangle(p0, p1, p2);// i / 9 == increments of 1
-        }
-        //end
 
         //create AABB container
         containerAABB = new AABB(new Point(vertices[0], vertices[1], vertices[2]), new Point(vertices[0], vertices[1], vertices[2]));
@@ -166,6 +171,37 @@ class OBJLoader {
                 containerAABB.Max.Z = vertexData[i + 2];
             }
         }
+        //end
+
+        //create bvh root
+        bvhRoot = new BVHNode(containerAABB);
+        //end
+
+        //Create wireframe model and triangles
+        collisionMesh = new Triangle[vertexData.Count / 9];
+
+
+        for (int i = 0; i < vertexData.Count; i += 9) {
+            Point p0, p1, p2;
+
+            p0 = new Point(vertexData[i], vertexData[i + 1], vertexData[i + 2]);
+
+            int j = i + 3;
+            p1 = new Point(vertexData[j], vertexData[j + 1], vertexData[j + 2]);
+
+            int k = j + 3;
+            p2 = new Point(vertexData[k], vertexData[k + 1], vertexData[k + 2]);
+
+            collisionMesh[i / 9] = new Triangle(p0, p1, p2);// i / 9 == increments of 1
+
+            //add triangles to bvh root
+            bvhRoot.Triangles.Add(collisionMesh[i / 9]);
+
+        }
+        //end
+
+        //BVHNode split
+        bvhRoot.Split();
         //end
 
         //create containerSphere

@@ -3,6 +3,14 @@ using Math_Implementation;
 
 namespace CollisionDetectionSelector.Primitive {
     class OBJ {
+        #region BVH
+        public void RenderBVH() {
+            GL.PushMatrix();
+            GL.MultMatrix(WorldMatrix.OpenGL);
+            model.RenderBVH();
+            GL.PopMatrix();
+    }
+        #endregion
         OBJLoader model = null;
 
         protected Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
