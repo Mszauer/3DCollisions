@@ -200,8 +200,9 @@ class OBJLoader {
         }
         //end
 
-        //BVHNode split
+        //BVHNode split + shake
         bvhRoot.Split();
+        bvhRoot.Shake();
         //end
 
         //create containerSphere

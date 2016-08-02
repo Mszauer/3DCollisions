@@ -12,6 +12,22 @@ class BVHNode {
     public List<Triangle> Triangles = null;
     public AABB AABB = null;
 
+    public int TriangleCount {
+        get {
+            int totalCount = 0;
+            if (Children != null) {
+                foreach(BVHNode child in Children) {
+                    totalCount += child.TriangleCount;
+                }
+            }
+            else if (Triangles != null) {
+                totalCount += Triangles.Count;
+            }
+
+            return totalCount;
+        }
+    }
+
     public BVHNode(AABB aabb) {
         //store aabb by value
         AABB = new AABB(aabb.Min, aabb.Max);
@@ -82,6 +98,19 @@ class BVHNode {
         if (Children != null) {
             foreach(BVHNode child in Children) {
                 child.Split(depth + 1);
+            }
+        }
+    }
+
+    public void Shake() {
+        if (Children != null) {
+            for (int i = Children.Count-1;i>= 0; i--) {
+                if (Children[i].TriangleCount == 0) {
+                    Children.RemoveAt(i);
+                }
+            }
+            foreach (BVHNode child in Children) {
+                child.Shake();
             }
         }
     }
