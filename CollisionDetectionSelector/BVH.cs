@@ -57,14 +57,14 @@ class BVHNode {
                     Vector3 center = AABB.Center.ToVector();
                     Vector3 extent = AABB.Extents;
 
-                    Vector3 TFL = center + new Vector3(-extent.X, +extent.Y, -extent.Z);
-                    Vector3 TFR = center + new Vector3(+extent.X, +extent.Y, -extent.Z);
-                    Vector3 TBL = center + new Vector3(-extent.X, +extent.Y, +extent.Z);
-                    Vector3 TBR = center + new Vector3(+extent.X, +extent.Y, +extent.Z);
-                    Vector3 BFL = center + new Vector3(-extent.X, -extent.Y, -extent.Z);
-                    Vector3 BFR = center + new Vector3(+extent.X, -extent.Y, -extent.Z);
-                    Vector3 BBL = center + new Vector3(-extent.X, -extent.Y, +extent.Z);
-                    Vector3 BBR = center + new Vector3(+extent.X, -extent.Y, +extent.Z);
+                    Vector3 TBR = center + new Vector3(-extent.X, +extent.Y, -extent.Z);
+                    Vector3 TBL = center + new Vector3(+extent.X, +extent.Y, -extent.Z);
+                    Vector3 TFR = center + new Vector3(-extent.X, +extent.Y, +extent.Z);
+                    Vector3 TFL = center + new Vector3(+extent.X, +extent.Y, +extent.Z);
+                    Vector3 BBR = center + new Vector3(-extent.X, -extent.Y, -extent.Z);
+                    Vector3 BBL = center + new Vector3(+extent.X, -extent.Y, -extent.Z);
+                    Vector3 BFR = center + new Vector3(-extent.X, -extent.Y, +extent.Z);
+                    Vector3 BFL = center + new Vector3(+extent.X, -extent.Y, +extent.Z);
 
                     Children.Add(new BVHNode(new AABB(new Point(TFL), new Point(center))));
                     Children.Add(new BVHNode(new AABB(new Point(TFR), new Point(center))));
