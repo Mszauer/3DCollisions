@@ -131,6 +131,35 @@ class LinesAndRays {
         p = new Point(ray.Position.ToVector() + ray.Normal*t);
         return result;
     }
+
+    //bvh Raycast
+    public static bool RaycastBVH(Ray ray, BVHNode node,out float t) {
+        //check if it hits model AABB even
+        if (!RaycastAABB(ray,node.AABB,out t)) {
+            return false;
+        }
+        //loop through children and recursively raycast
+        if (node.Children != null) {
+            foreach(BVHNode child in node.Children) {
+                if (RaycastBVH(ray,child,out t)) {
+                    return true;
+                }
+            }
+        }
+        //if leaf node, raycast against triangles
+        if (node.Triangles != null) {
+            foreach(Triangle triangle in node.Triangles) {
+                if (Collisions.RaycastTriangle(ray,triangle, out t)) {
+                    return true;
+                }
+            }
+        }
+
+        //return false by default
+        return false;
+    }
+    //end
+
     public static bool LinecastSphere(Line line, Sphere sphere, out Point result) {
         Ray r = new Ray();
         r.Position = new Point(line.Start.X, line.Start.Y, line.Start.Z);

@@ -9,9 +9,17 @@ namespace CollisionDetectionSelector.Primitive {
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.RenderBVH();
             GL.PopMatrix();
-    }
+        }
         #endregion
         OBJLoader model = null;
+
+        //expose model bvhRoot
+        public BVHNode BVHRoot {
+            get {
+                return model.BvhRoot;
+            }
+        }
+        //end
 
         protected Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
         protected Vector3 rotation = new Vector3(0.0f, 0.0f, 0.0f);

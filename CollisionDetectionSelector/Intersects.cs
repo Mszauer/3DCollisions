@@ -209,7 +209,7 @@ class Intersects {
     public static bool OBJTriangleIntersect(OBJ model,Triangle triangle) {
         return OBJTriangleIntersect(triangle, model);
     }
-    public static bool OBJRayIntersect(OBJ model, Ray ray,out float t) {
+    public static bool OBJRaycast(OBJ model, Ray ray,out float t) {
         Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
         Vector3 newRayPos = Matrix4.MultiplyPoint(inverseWorld, ray.Position.ToVector());
         Vector3 newRayNorm = Matrix4.MultiplyVector(inverseWorld, ray.Normal);
@@ -222,15 +222,11 @@ class Intersects {
         if(!LinesAndRays.RaycastSphere(newRay,model.BoundingSphere,out t)) {
             return false;
         }
-        foreach(Triangle triangle in model.Mesh) {
-            if(Collisions.RaycastTriangle(newRay,triangle, out t)){
-                return true;
-            }
-        }
-        return false;
+
+        return LinesAndRays.RaycastBVH(newRay, model.BVHRoot, out t);
     }
-    public static bool OBJRayIntersect(Ray ray, OBJ model,out float t) {
-        return OBJRayIntersect(model, ray,out t);
+    public static bool OBJRaycast(Ray ray, OBJ model,out float t) {
+        return OBJRaycast(model, ray,out t);
     }
 #endregion
 }

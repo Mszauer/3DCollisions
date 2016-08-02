@@ -54,7 +54,7 @@ namespace CollisionDetectionSelector.Samples {
             foreach (Ray test in tests) {
                 bool intersection = false;
                 foreach (OBJ obj in objs) {
-                    if (Intersects.OBJRayIntersect(test, obj, out t)) {
+                    if (Intersects.OBJRaycast(test, obj, out t)) {
                         intersection = true;
                     }
                 }
