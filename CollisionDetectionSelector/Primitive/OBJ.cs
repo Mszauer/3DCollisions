@@ -82,7 +82,7 @@ namespace CollisionDetectionSelector.Primitive {
         }
 
         private void ChildrenRender(bool normal,bool bvh, bool debug) {
-            if (Children.Count > 1) {
+            if (Children != null) {
                 foreach(OBJ child in Children) {
                     if (normal) {
                         child.Render();
@@ -93,7 +93,9 @@ namespace CollisionDetectionSelector.Primitive {
                     else if (debug) {
                         child.DebugRender();
                     }
-                    child.ChildrenRender(normal, bvh, debug);
+                    if(child.Children != null) {
+                        child.ChildrenRender(normal, bvh, debug);
+                    }
                 }
             }
         }
@@ -102,7 +104,7 @@ namespace CollisionDetectionSelector.Primitive {
             //always getter
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.Render();
-            
+            ChildrenRender(true, false, false);
             GL.PopMatrix();
         }
         public void DebugRender() {
