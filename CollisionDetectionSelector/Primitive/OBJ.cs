@@ -1,15 +1,13 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using Math_Implementation;
+using System.Collections.Generic;
 
 namespace CollisionDetectionSelector.Primitive {
     class OBJ {
-        #region BVH
-        public void RenderBVH() {
-            GL.PushMatrix();
-            GL.MultMatrix(WorldMatrix.OpenGL);
-            model.RenderBVH();
-            GL.PopMatrix();
-        }
+        
+        #region Node
+        public OBJ Parent = null;
+        public List<OBJ> Children = new List<OBJ>();
         #endregion
         OBJLoader model = null;
 
@@ -82,11 +80,41 @@ namespace CollisionDetectionSelector.Primitive {
         public OBJ(OBJLoader loader) {
             model = loader;
         }
+
+        private void ChildrenRender(bool normal,bool bvh, bool debug) {
+            if (Children.Count > 1) {
+                foreach(OBJ child in Children) {
+                    if (normal) {
+                        child.Render();
+                    }
+                    else if (bvh) {
+                        child.RenderBVH();
+                    }
+                    else if (debug) {
+                        child.DebugRender();
+                    }
+                    if (child.Children.Count > 1) {
+                        foreach(OBJ nephew in child.Children) {
+                            if (normal) {
+                                nephew.Render();
+                            }
+                            else if (bvh) {
+                                nephew.RenderBVH();
+                            }
+                            else if (debug) {
+                                nephew.DebugRender();
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public void Render() {
             GL.PushMatrix();
             //always getter
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.Render();
+            
             GL.PopMatrix();
         }
         public void DebugRender() {
@@ -96,8 +124,18 @@ namespace CollisionDetectionSelector.Primitive {
             GL.PopMatrix();
         }
 
+        #region BVH
+        public void RenderBVH() {
+            GL.PushMatrix();
+            GL.MultMatrix(WorldMatrix.OpenGL);
+            model.RenderBVH();
+            GL.PopMatrix();
+        }
+        #endregion
+
         public override string ToString() {
             return "Triangle count: " + model.NumCollisionTriangles;
         }
+        
     }
 }
