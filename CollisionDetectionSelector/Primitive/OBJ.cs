@@ -18,13 +18,33 @@ namespace CollisionDetectionSelector.Primitive {
             }
         }
         //end
+        public bool IsEmpty {
+            get {
+                return model == null;
+            }
+        }
 
         protected Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
         protected Vector3 rotation = new Vector3(0.0f, 0.0f, 0.0f);
         protected Vector3 scale = new Vector3(1.0f, 1.0f, 1.0f);
 
         protected Matrix4 worldMatrix;
-        protected bool dirty = true;//true by default
+        protected bool dirtySelf = true;//true by default
+        protected bool dirty {
+            get {
+                return dirtySelf;
+            }
+            set {
+                dirtySelf = value;
+                if (value) {
+                    foreach (OBJ child in Children) {
+                        child.dirty = true;
+                    }
+                }
+            }
+        }
+
+        #region WorldSpace
         public Matrix4 WorldMatrix {
             get {
                 if (dirty) {
@@ -37,10 +57,18 @@ namespace CollisionDetectionSelector.Primitive {
 
                     Matrix4 scaling = Matrix4.Scale(scale);
                     worldMatrix = translation * orientation * scaling;
+
+                    if (Parent != null) {
+                        worldMatrix *= Parent.WorldMatrix;
+                    }
+                    dirty = false;
                 }
                 return worldMatrix;
             }
         }
+        #endregion
+
+        #region LocalSpace
         public Vector3 Position {
             get { return position; }
             set {
@@ -48,6 +76,7 @@ namespace CollisionDetectionSelector.Primitive {
                 dirty = true;
             }
         }
+
         public Vector3 Rotation {
             get { return rotation; }
             set {
@@ -55,6 +84,7 @@ namespace CollisionDetectionSelector.Primitive {
                 dirty = true;
             }
         }
+
         public Vector3 Scale {
             get { return scale; }
             set {
@@ -62,6 +92,8 @@ namespace CollisionDetectionSelector.Primitive {
                 dirty = true;
             }
         }
+        #endregion
+
         public AABB BoundingBox {
             get {
                 return model.BoundingBox;
@@ -104,14 +136,16 @@ namespace CollisionDetectionSelector.Primitive {
             //always getter
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.Render();
-            ChildrenRender(true, false, false);
             GL.PopMatrix();
+            ChildrenRender(true, false, false);
         }
+
         public void DebugRender() {
             GL.PushMatrix();
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.DebugRender();
             GL.PopMatrix();
+            ChildrenRender(false, false, true);
         }
 
         #region BVH
@@ -120,6 +154,7 @@ namespace CollisionDetectionSelector.Primitive {
             GL.MultMatrix(WorldMatrix.OpenGL);
             model.RenderBVH();
             GL.PopMatrix();
+            ChildrenRender(false, true, false);
         }
         #endregion
 
