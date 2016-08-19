@@ -93,19 +93,7 @@ namespace CollisionDetectionSelector.Primitive {
                     else if (debug) {
                         child.DebugRender();
                     }
-                    if (child.Children.Count > 1) {
-                        foreach(OBJ nephew in child.Children) {
-                            if (normal) {
-                                nephew.Render();
-                            }
-                            else if (bvh) {
-                                nephew.RenderBVH();
-                            }
-                            else if (debug) {
-                                nephew.DebugRender();
-                            }
-                        }
-                    }
+                    child.ChildrenRender(normal, bvh, debug);
                 }
             }
         }
