@@ -78,17 +78,12 @@ class LinesAndRays {
             t = -1;
             return false;//no intersection
         }
+       
+        t = tmin;
         if (tmin < 0f) {
             t = tmax;
-            if (t >= 0) {
-                return true;
-            }
         }
-        t = tmin;
-        if (t >= 0) {
-            return true;
-        }
-        return false;
+        return true;
     }
     public static float RaycastAABB(Ray ray,AABB aabb) {
         float t = -1;

@@ -6,7 +6,7 @@ using CollisionDetectionSelector.Primitive;
 using Math_Implementation;
 
 class BVHNode {
-    protected static int maxDepth = 3;
+    protected static int maxDepth = 1;
 
     public List<BVHNode> Children = null;
     public List<Triangle> Triangles = null;

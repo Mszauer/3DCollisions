@@ -210,6 +210,10 @@ class Intersects {
         return OBJTriangleIntersect(triangle, model);
     }
     public static bool OBJRaycast(OBJ model, Ray ray,out float t) {
+        if (model.IsEmpty) {
+            t = -1;
+            return false;
+        }
         Matrix4 inverseWorld = Matrix4.Inverse(model.WorldMatrix);
         Vector3 newRayPos = Matrix4.MultiplyPoint(inverseWorld, ray.Position.ToVector());
         Vector3 newRayNorm = Matrix4.MultiplyVector(inverseWorld, ray.Normal);

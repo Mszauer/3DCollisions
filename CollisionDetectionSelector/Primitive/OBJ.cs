@@ -35,8 +35,11 @@ namespace CollisionDetectionSelector.Primitive {
                 return dirtySelf;
             }
             set {
-                dirtySelf = value;
-                if (value) {
+                bool contanier = value;
+                dirtySelf = contanier;
+
+                System.Diagnostics.Debug.Assert(dirtySelf == value);
+                if (dirtySelf) {
                     foreach (OBJ child in Children) {
                         child.dirty = true;
                     }
@@ -59,8 +62,9 @@ namespace CollisionDetectionSelector.Primitive {
                     worldMatrix = translation * orientation * scaling;
 
                     if (Parent != null) {
-                        worldMatrix *= Parent.WorldMatrix;
+                        worldMatrix = Parent.WorldMatrix* worldMatrix ;
                     }
+
                     dirty = false;
                 }
                 return worldMatrix;
@@ -135,7 +139,9 @@ namespace CollisionDetectionSelector.Primitive {
             GL.PushMatrix();
             //always getter
             GL.MultMatrix(WorldMatrix.OpenGL);
-            model.Render();
+            if (model != null) {
+                model.Render();
+            }
             GL.PopMatrix();
             ChildrenRender(true, false, false);
         }
@@ -143,7 +149,9 @@ namespace CollisionDetectionSelector.Primitive {
         public void DebugRender() {
             GL.PushMatrix();
             GL.MultMatrix(WorldMatrix.OpenGL);
-            model.DebugRender();
+            if (model != null) {
+                model.DebugRender();
+            }
             GL.PopMatrix();
             ChildrenRender(false, false, true);
         }
@@ -152,7 +160,9 @@ namespace CollisionDetectionSelector.Primitive {
         public void RenderBVH() {
             GL.PushMatrix();
             GL.MultMatrix(WorldMatrix.OpenGL);
-            model.RenderBVH();
+            if (model != null) {
+                model.RenderBVH();
+            }
             GL.PopMatrix();
             ChildrenRender(false, true, false);
         }

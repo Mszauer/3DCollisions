@@ -66,6 +66,7 @@
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="OBJLoader.cs" />
+    <Compile Include="OctreeNode.cs" />
     <Compile Include="Primitive\AABB.cs" />
     <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\LinetestTriangle.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Samples\OBJSphereIntersection.cs" />
     <Compile Include="Samples\OBJTriangleIntersection.cs" />
     <Compile Include="Samples\OBJTrianglesSphere.cs" />
+    <Compile Include="Samples\OctreeSample.cs" />
     <Compile Include="Samples\PlanePlaneIntersection.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
     <Compile Include="Samples\PointInTriangleSample.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Samples\RaycastTriangle.cs" />
     <Compile Include="Samples\RaySample.cs" />
     <Compile Include="Samples\SampleSphere.cs" />
+    <Compile Include="Samples\SceneSample.cs" />
     <Compile Include="Samples\SphereAABBIntersection.cs" />
     <Compile Include="Samples\SpherePlaneIntersection.cs" />
     <Compile Include="Samples\SphereSphereIntersection.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="Samples\TriangleSphereIntersection.cs" />
     <Compile Include="Samples\TriangleTriangleIntersection.cs" />
     <Compile Include="Samples\WindowSample.cs" />
+    <Compile Include="Scene.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
