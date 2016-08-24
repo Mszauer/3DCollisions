@@ -40,6 +40,39 @@ namespace Math_Implementation {
                 Matrix[i] = values[i];
             }
         }
+        #region OPENGL
+        public static Vector3 Unproject(Vector3 windowCoords,Matrix4 modelView, Matrix4 projection,float[] viewPort) {
+            // First, convert from window coordinates to NDC coordinates
+            Vector4 ndcCoords = new Vector4(windowCoords.X, windowCoords.Y, windowCoords.Z, 1.0f);
+            ndcCoords.X = (ndcCoords.X - viewPort[0]) / viewPort[2]; // Range 0 to 1: (windowX - viewX) / viewWidth
+            ndcCoords.Y = (ndcCoords.Y - viewPort[1]) / viewPort[3]; // Range 0 to 1: (windowY - viewY) / viewHeight
+                                                                     // Remember, NDC ranges from -1 to 1, not 0 to 1
+            ndcCoords.X = ndcCoords.X * 2f - 1f; // Range: -1 to 1
+            ndcCoords.Y = 1f - ndcCoords.Y * 2f; // Range: -1 to 1 - Flipped!
+            ndcCoords.Z = ndcCoords.Z * 2f - 1f; // Range: -1 to 1
+
+            // Next, from NDC space to eye / view space.
+            // Note, this leaves a scalar in the W component!
+            Vector4 eyeCoords = Matrix4.Inverse(projection) * ndcCoords;
+
+            // eye space to world space.
+            // Remember, eye space assumes the camera is at the center of the world,
+            // this is not the case, let's move the actual point into world space
+            Vector4 worldCoords = Matrix4.Inverse(modelView) * eyeCoords;
+
+            // Finally, undo the perspective divide!
+            // When we multiplied by the inverse of the projection matrix, that
+            // multiplication left the inverse of the perspective divide in the 
+            // W component of the resulting vector. This could be 0
+            if (Math.Abs(0.0f - worldCoords.W) > 0.00001f) {
+                // This is the same as dividing every component by W
+                worldCoords *= 1.0f / worldCoords.W;
+            }
+
+            // Now we have a proper 4D vector with a W of 1 (or 0)
+            return new Vector3(worldCoords.X, worldCoords.Y, worldCoords.Z);
+        }
+        #endregion
         //scalar operators
         public static Matrix4 operator +(Matrix4 matrixA, Matrix4 matrixB) {
             Matrix4 result = new Matrix4();

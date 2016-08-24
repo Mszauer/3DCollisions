@@ -89,7 +89,7 @@ namespace CollisionDetectionSelector.Samples {
 
             GL.Enable(EnableCap.Lighting);
             GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-            scene.Render();
+            scene.Render(false);
             GL.Disable(EnableCap.Lighting);
 
             foreach (Ray r in rays) {

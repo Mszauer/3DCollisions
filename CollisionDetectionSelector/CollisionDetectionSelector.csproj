@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Application.cs" />
     <Compile Include="BVH.cs" />
+    <Compile Include="Primitive\Camera.cs" />
     <Compile Include="Collisions.cs" />
     <Compile Include="Intersects.cs" />
     <Compile Include="LinesAndRays.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Samples\AABBPlaneIntersection.cs" />
     <Compile Include="Samples\AABBPointSample.cs" />
     <Compile Include="Samples\AABBSample.cs" />
+    <Compile Include="Samples\CameraSample.cs" />
     <Compile Include="Samples\ClosesPointOnPlane.cs" />
     <Compile Include="Samples\ClosestPointOnLineSample.cs" />
     <Compile Include="Samples\ClosestPointOnRay.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Samples\OBJTriangleIntersection.cs" />
     <Compile Include="Samples\OBJTrianglesSphere.cs" />
     <Compile Include="Samples\OctreeSample.cs" />
+    <Compile Include="Samples\PickingExample.cs" />
     <Compile Include="Samples\PlanePlaneIntersection.cs" />
     <Compile Include="Samples\PlaneSample.cs" />
     <Compile Include="Samples\PointInTriangleSample.cs" />

@@ -13,19 +13,18 @@ namespace CollisionDetectionSelector {
             Octree.Split(3);
         }
 
-        public void Render() {
+        public void Render(bool debug) {
             RootObject.Render();
-
-            GL.Disable(EnableCap.Lighting);
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-            Octree.DebugRender();
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-
-            Octree.DebugRenderOnlyVisitedNodes();
-
-            GL.Enable(EnableCap.Lighting);
+            if (debug) {
+                GL.Disable(EnableCap.Lighting);
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+                Octree.DebugRender();
+                GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
+                Octree.DebugRenderOnlyVisitedNodes();
+                GL.Enable(EnableCap.Lighting);
+            }
         }
-        
+
         public OBJ Raycast(Ray ray, out float t) {
             return Octree.Raycast(ray, out t);
         }
