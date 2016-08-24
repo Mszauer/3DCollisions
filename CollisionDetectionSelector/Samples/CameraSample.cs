@@ -99,7 +99,8 @@ namespace CollisionDetectionSelector.Samples {
             DrawOrigin();
 
             GL.Enable(EnableCap.Lighting);
-            scene.Render(false);
+            int numRendered = scene.Render(false);
+            Window.Title = "Rendered:" + numRendered;
             GL.Disable(EnableCap.Lighting);
         }
     }

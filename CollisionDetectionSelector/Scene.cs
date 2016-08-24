@@ -13,8 +13,9 @@ namespace CollisionDetectionSelector {
             Octree.Split(3);
         }
 
-        public void Render(bool debug) {
-            RootObject.Render();
+        public int Render(bool debug) {
+            int result = RootObject.Render();
+
             if (debug) {
                 GL.Disable(EnableCap.Lighting);
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
@@ -22,7 +23,9 @@ namespace CollisionDetectionSelector {
                 GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
                 Octree.DebugRenderOnlyVisitedNodes();
                 GL.Enable(EnableCap.Lighting);
+
             }
+            return result;
         }
 
         public OBJ Raycast(Ray ray, out float t) {

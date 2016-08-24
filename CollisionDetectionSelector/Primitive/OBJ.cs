@@ -117,11 +117,12 @@ namespace CollisionDetectionSelector.Primitive {
             model = loader;
         }
 
-        private void ChildrenRender(bool normal,bool bvh, bool debug) {
+        private int ChildrenRender(bool normal,bool bvh, bool debug) {
+            int result = 0;
             if (Children != null) {
                 foreach(OBJ child in Children) {
                     if (normal) {
-                        child.Render();
+                        result += child.Render();
                     }
                     else if (bvh) {
                         child.RenderBVH();
@@ -130,20 +131,26 @@ namespace CollisionDetectionSelector.Primitive {
                         child.DebugRender();
                     }
                     if(child.Children != null) {
-                        child.ChildrenRender(normal, bvh, debug);
+                        result += child.ChildrenRender(normal, bvh, debug);
                     }
                 }
             }
+            return result;
         }
-        public void Render() {
+        public int Render() {
+            int result = 0;
+
             GL.PushMatrix();
             //always getter
             GL.MultMatrix(WorldMatrix.OpenGL);
             if (model != null) {
                 model.Render();
+                result++;
             }
             GL.PopMatrix();
-            ChildrenRender(true, false, false);
+            
+            result += ChildrenRender(true, false, false);
+            return result;
         }
 
         public void DebugRender() {
