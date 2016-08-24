@@ -599,4 +599,25 @@ class Collisions {
         return true;
     }
     #endregion
+    #region FRUSTUM
+    private static float HalfSpaceTest(Plane plane, Point point) {
+        return Vector3.Dot((new Vector3(point.X, point.Y, point.Z)), plane.Normal) + plane.Distance;
+
+    }
+    public static bool Intersects(Plane[] frustum, Point point) {
+        //loop through all frustum planes and do half space
+        //between the point and each plane
+        foreach (Plane p in frustum) {
+            //if any half space tests are <0 return false
+            if (Math.Abs(HalfSpaceTest(p, point)) < 0.0001f) {
+                return false;
+            }
+        }
+        //return true by default
+        return true;
+    }
+    public static bool Intersects(Point point,Plane[] frustum) {
+        return Intersects(frustum, point);
+    }
+    #endregion
 }

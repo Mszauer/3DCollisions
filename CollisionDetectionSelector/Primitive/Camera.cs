@@ -16,6 +16,13 @@ namespace CollisionDetectionSelector.Primitive {
         protected Matrix4 cachedWorld = new Matrix4();
         protected Matrix4 cachedView = new Matrix4();
 
+        public Matrix4 ProjectionMatrix {
+            get {
+                float[] rawPorjection = new float[16];
+                GL.GetFloat(GetPName.ProjectionMatrix, rawPorjection);
+                return Matrix4.Transpose(new Matrix4(rawPorjection));
+            }
+        }
         public Matrix4 Translation {
             get {
                 //Identity, with 4th column being positions
@@ -114,6 +121,48 @@ namespace CollisionDetectionSelector.Primitive {
             forward = Vector3.Normalize(forward);
             right = Vector3.Normalize(right);
             up = Vector3.Normalize(up);
+        }
+        #endregion
+
+        #region FRUSTUM
+        private static Plane FromNumbers(Vector4 numbers) {
+            Vector3 abc = new Vector3(numbers.X, numbers.Y, numbers.Z);
+            float mag = abc.Length();
+            abc.Normalize();
+
+            Plane p = new Plane();
+            p.Normal = abc;
+            p.Distance = numbers.W / mag;
+            return p;
+        }
+        
+        public Plane[] Frustum {
+            get {
+                Plane[] frustum = new Plane[6];
+
+                Matrix4 vp = ProjectionMatrix * ViewMatrix;
+
+                Vector4[] rows = new Vector4[4] {new Vector4(vp[0,0],vp[0,1],vp[0,2],vp[0,3]),
+                                                 new Vector4(vp[1,0],vp[1,1],vp[1,2],vp[1,3]),
+                                                 new Vector4(vp[2,0],vp[2,1],vp[2,2],vp[2,3]),
+                                                 new Vector4(vp[3,0],vp[3,1],vp[3,2],vp[3,3]),
+                                                 };
+
+                frustum[0] = FromNumbers(rows[3] + rows[0]);
+                frustum[1] = FromNumbers(rows[3] - rows[0]);
+                frustum[2] = FromNumbers(rows[3] + rows[1]);
+                frustum[3] = FromNumbers(rows[3] - rows[1]);
+                frustum[4] = FromNumbers(rows[3] + rows[2]);
+                frustum[5] = FromNumbers(rows[3] - rows[2]);
+
+                return frustum;
+                //frustum[0] = left plane
+                //frustum[1] = right plane
+                //frustum[2] = bottom plane
+                //frustum[3] = top plane
+                //frustum[4] = near plane
+                //frustum[5] = far plane
+            }
         }
         #endregion
     }

@@ -65,6 +65,42 @@ namespace CollisionDetectionSelector.Samples {
             if (camView != matView) {
                 System.Console.WriteLine("ERROR! expected camera and matrix view's to be the same!");
             }
+            //frustum
+            Plane[] frustum = new Plane[6];
+            frustum[0] = new Plane(new Vector3(0.2381448f, -0.2721655f, -1.598973f), 44.82524f);
+            frustum[1] = new Plane(new Vector3(-1.598973f, -0.2721655f, 0.2381448f), 44.82524f);
+            frustum[2] = new Plane(new Vector3(-1.013747f, 1.394501f, -1.013747f), 36.74234f);
+            frustum[3] = new Plane(new Vector3(-0.3470805f, -1.938832f, -0.3470805f), 36.74234f);
+            frustum[4] = new Plane(new Vector3(-1.360841f, -0.5443366f, -1.360841f), 73.4747f);
+            frustum[5] = new Plane(new Vector3((float)1.364946E-05, (float)5.453825E-06, (float)1.364946E-05), 923.8687f);
+
+            for (int i = 0; i < 6; ++i) {
+                if (camera.Frustum[i].Normal != frustum[i].Normal) {
+                    if (Vector3.Normalize(camera.Frustum[i].Normal) == Vector3.Normalize(frustum[i].Normal)) {
+                        System.Console.WriteLine("\tLooks like the normal of your frustum plane is NOT NORMALIZED!");
+                    }
+                    else {
+                        System.Console.WriteLine("Detected error in frustum, plane " + i);
+                    }
+                    System.Console.WriteLine("\tExpected: " + camera.Frustum[i].Normal);
+                    System.Console.WriteLine("\tGot: " + frustum[i].Normal);
+                }
+                if (System.Math.Abs(camera.Frustum[i].Distance - frustum[i].Distance) > 0.0001f) {
+                    System.Console.WriteLine("Wrong distance for plane: " + i);
+                    System.Console.WriteLine("\tExpected: " + camera.Frustum[i].Distance);
+                    System.Console.WriteLine("\tGot: " + frustum[i].Distance);
+                }
+            }
+            //Point in frustum
+            if (!Collisions.Intersects(new Point(), camera.Frustum)) {
+                System.Console.WriteLine("Error with point in frustum! 0");
+            }
+            if (Collisions.Intersects(new Point(-500, -500, -500), camera.Frustum)) {
+                System.Console.WriteLine("Error with point in frustum! 1");
+            }
+            if (!Collisions.Intersects(new Point(2, 30, 4), camera.Frustum)) {
+                System.Console.WriteLine("Error with point in frustum! 2");
+            }
         }
         public override void Update(float deltaTime) {
             float xDelta = (float)Window.Mouse.XDelta / (float)Window.Width;
