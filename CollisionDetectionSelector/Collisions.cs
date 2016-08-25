@@ -609,7 +609,7 @@ class Collisions {
         //between the point and each plane
         foreach (Plane p in frustum) {
             //if any half space tests are <0 return false
-            if (Math.Abs(HalfSpaceTest(p, point)) < 0.0001f) {
+            if (HalfSpaceTest(p, point) < 0) {
                 return false;
             }
         }
@@ -618,6 +618,46 @@ class Collisions {
     }
     public static bool Intersects(Point point,Plane[] frustum) {
         return Intersects(frustum, point);
+    }
+    public static bool Intersects(Plane[] frustum, Sphere sphere) {
+        foreach(Plane p in frustum) {
+            if (HalfSpaceTest(p,sphere.Position) < -sphere.Radius) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static bool Intersects(Sphere sphere, Plane[] frustum) {
+        return Intersects(frustum, sphere);
+    }
+    public static bool Intersects(AABB aabb, Plane[] frustum) {
+        Point center = new Point(aabb.Center);
+        Point extent = new Point(aabb.Extents.X, aabb.Extents.Y, aabb.Extents.Z);
+        Point[] corners = new Point[8] {
+            new Point(-extent.X+center.X, +extent.Y+center.Y, -extent.Z+center.Z), //TBR
+            new Point(+extent.X+center.X, +extent.Y+center.Y, -extent.Z+center.Z), //TBL
+            new Point(-extent.X+center.X, +extent.Y+center.Y, +extent.Z+center.Z), //TFR
+            new Point(+extent.X+center.X, +extent.Y+center.Y, +extent.Z+center.Z), //TFL
+            new Point(-extent.X+center.X, -extent.Y+center.Y, -extent.Z+center.Z), //BBR
+            new Point(+extent.X+center.X, -extent.Y+center.Y, -extent.Z+center.Z), //BBL
+            new Point(-extent.X+center.X, -extent.Y+center.Y, +extent.Z+center.Z), //BFR
+            new Point(+extent.X+center.X, -extent.Y+center.Y, +extent.Z+center.Z) //BFL
+        };
+        foreach (Plane p in frustum) {
+            int inCount = 8;
+            foreach(Point corner in corners) {
+                if (HalfSpaceTest(p, corner) < 0.0f) {
+                    inCount--;
+                }
+            }
+            if (inCount <= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static bool Intersects(Plane[] frustum,AABB aabb) {
+        return Intersects(aabb, frustum);
     }
     #endregion
 }

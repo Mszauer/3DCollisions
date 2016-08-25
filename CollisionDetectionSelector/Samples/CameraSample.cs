@@ -95,11 +95,31 @@ namespace CollisionDetectionSelector.Samples {
             if (!Collisions.Intersects(new Point(), camera.Frustum)) {
                 System.Console.WriteLine("Error with point in frustum! 0");
             }
-            if (Collisions.Intersects(new Point(-500, -500, -500), camera.Frustum)) {
+            if (Collisions.Intersects(new Point(-5000, -5000, -5000), camera.Frustum)) {
                 System.Console.WriteLine("Error with point in frustum! 1");
             }
             if (!Collisions.Intersects(new Point(2, 30, 4), camera.Frustum)) {
                 System.Console.WriteLine("Error with point in frustum! 2");
+            }
+            //Sphere in frustum
+            if (!Collisions.Intersects(new Sphere(), camera.Frustum)) {
+                System.Console.WriteLine("Error with sphere in frustum! 0");
+            }
+            if (Collisions.Intersects(new Sphere(-5000, -5000, -5000, 1f), camera.Frustum)) {
+                System.Console.WriteLine("Error with sphere in frustum! 1");
+            }
+            if (!Collisions.Intersects(new Sphere(2, 30, 4, 4f), camera.Frustum)) {
+                System.Console.WriteLine("Error with sphere in frustum! 2");
+            }
+            //AABB in frustum
+            if (!Collisions.Intersects(new AABB(), camera.Frustum)) {
+                System.Console.WriteLine("Error with aabb in frustum! 0");
+            }
+            if (Collisions.Intersects(new AABB(new Point(-650, -650, -650), new Point(-600, -600, -600)), camera.Frustum)) {
+                System.Console.WriteLine("Error with aabb in frustum! 1");
+            }
+            if (!Collisions.Intersects(new AABB(new Point(2, 30, 4), new Point(25, 35, 45)), camera.Frustum)) {
+                System.Console.WriteLine("Error with aabb in frustum! 2");
             }
         }
         public override void Update(float deltaTime) {
