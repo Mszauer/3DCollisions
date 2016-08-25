@@ -15,6 +15,9 @@ namespace CollisionDetectionSelector.Samples {
             scene.RootObject.Children[count].Parent = scene.RootObject;
             scene.RootObject.Children[count].Position = position;
             scene.RootObject.Children[count].Scale = scale;
+
+            // Record object with spacial partitioning tree
+            scene.Octree.Insert(scene.RootObject.Children[count]);
         }
 
         public override void Initialize(int width, int height) {
@@ -28,7 +31,7 @@ namespace CollisionDetectionSelector.Samples {
             GL.Light(LightName.Light0, LightParameter.Diffuse, new float[] { 0f, 1f, 0f, 1f });
             GL.Light(LightName.Light0, LightParameter.Specular, new float[] { 1f, 1f, 1f, 1f });
 
-            scene.Initialize(7f);
+            scene.Initialize(70f);
             cube = new OBJLoader("Assets/cube.obj");
 
             AddCubeToSceneRoot(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(50.0f, 1.0f, 50.0f));
@@ -150,13 +153,13 @@ namespace CollisionDetectionSelector.Samples {
             }
         }
         public override void Render() {
-            //Matrix4 viewMat = Matrix4.LookAt(new Vector3(10, 10, 10), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            GL.LoadMatrix(/*viewMat.OpenGL*/camera.ViewMatrix.OpenGL);
+            GL.LoadMatrix(camera.ViewMatrix.OpenGL);
             DrawOrigin();
 
             GL.Enable(EnableCap.Lighting);
-            int numRendered = scene.Render(false);
-            Window.Title = "Rendered:" + numRendered;
+            int numRendered = scene.Octree.Render(camera.Frustum);
+            scene.Octree.ResetRenderFlag();
+            Window.Title = "Rendered: " + numRendered;
             GL.Disable(EnableCap.Lighting);
         }
     }

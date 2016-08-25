@@ -9,6 +9,7 @@ namespace CollisionDetectionSelector.Primitive {
         public OBJ Parent = null;
         public List<OBJ> Children = new List<OBJ>();
         #endregion
+        
         OBJLoader model = null;
 
         //expose model bvhRoot
@@ -29,6 +30,7 @@ namespace CollisionDetectionSelector.Primitive {
         protected Vector3 scale = new Vector3(1.0f, 1.0f, 1.0f);
 
         protected Matrix4 worldMatrix;
+        protected bool wasRendered = false;
         protected bool dirtySelf = true;//true by default
         protected bool dirty {
             get {
@@ -178,6 +180,29 @@ namespace CollisionDetectionSelector.Primitive {
         public override string ToString() {
             return "Triangle count: " + model.NumCollisionTriangles;
         }
-        
+        public void ResetRenderFlag() {
+            wasRendered = false;
+        }
+        public bool NonRecursiveRender(Plane[] frustum) {
+            if (model == null || wasRendered) {
+                return false;
+            }
+            Sphere bounds = new Sphere();
+            bounds.Position = new Point(Matrix4.MultiplyPoint(WorldMatrix, model.BoundingSphere.vPosition));
+            float scalar = System.Math.Abs(System.Math.Max(System.Math.Max(
+                                                                            System.Math.Abs(WorldMatrix[0, 0]), System.Math.Abs(WorldMatrix[1, 1])),
+                                                                            System.Math.Abs(WorldMatrix[2, 2])));
+            bounds.Radius = model.BoundingSphere.Radius * scalar;
+            if (!Collisions.Intersects(frustum, bounds)) {
+                return false;
+            }
+
+            wasRendered = true;
+            GL.PushMatrix();
+            GL.MultMatrix(WorldMatrix.OpenGL);
+            model.Render();
+            GL.PopMatrix();
+            return true;
+        }
     }
 }

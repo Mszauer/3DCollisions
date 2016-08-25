@@ -164,6 +164,37 @@ namespace CollisionDetectionSelector {
                 GL.Color3(0f, 1f, 0f);
             }
         }
-
+        public int Render(Plane[] frustum) {
+            int total = 0;
+            //render logic
+            if (!Collisions.Intersects(frustum, Bounds)) {
+                return 0;
+            }
+            if (Contents != null) {
+                foreach(OBJ content in Contents) {
+                    content.NonRecursiveRender(frustum);
+                    total++;
+                }
+            }
+            //recurse through all children
+            if(Children != null) {
+                foreach(OctreeNode child in Children) {
+                    total += child.Render(frustum);
+                }
+            }
+            return total;
+        }
+        public void ResetRenderFlag() {
+            if (Contents != null) {
+                foreach(OBJ content in Contents) {
+                    content.ResetRenderFlag();
+                }
+            }
+            if(Children != null) {
+                foreach(OctreeNode child in Children) {
+                    child.ResetRenderFlag();
+                }
+            }
+        }
     }
 }
